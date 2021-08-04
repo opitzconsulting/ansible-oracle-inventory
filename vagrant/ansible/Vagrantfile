@@ -1,0 +1,60 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box =  "Rendanic/oraclelinux-8.x"
+
+  config.vm.box_check_update = false
+
+  config.vm.network "private_network", ip: "192.168.56.99"
+
+  # config.vm.network "public_network"
+  config.ssh.insert_key = true
+  config.ssh.username = "vagrant"
+  config.ssh.password = "vagrant"
+  
+  config.vm.hostname = "ansible.local"
+
+  config.vm.provider "virtualbox" do |vb|
+     vb.gui = false
+     vb.memory = "3072"
+     vb.cpus = 2
+	 vb.name = "Oracle_ansible"
+
+  end
+
+
+  config.vm.provision "shell", inline: <<-SHELL
+
+  sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+  systemctl restart sshd.service
+
+  yum install -y oracle-epel-release-el8
+  yum install -y git mc tree tig glances bash-completion ansible
+
+  lvresize -L 2g /dev/rootvg/swaplv
+  swapoff -a
+  mkswap /dev/rootvg/swaplv
+  swapon -a
+
+	cd /usr/local; git clone --recursive  https://github.com/Rendanic/SQL-Zauberkasten.git
+	
+	test -d /home/vagrant/git || mkdir /home/vagrant/git
+	cd /home/vagrant/git
+	test -d /home/vagrant/git/ansible-oracle || git clone -b oc --recursive https://github.com/opitzconsulting/ansible-oracle.git
+	# test -d /home/vagrant/git/ansible-oracle-inventory || git clone --recursive https://github.com/opitzconsulting/ansible-oracle.git
+
+  chown -R vagrant:vagrant /home/vagrant/git
+
+  # create ssh-keys for passwordless login in ansible-oracle on localhost
+  test -f /home/vagrant/.ssh/id_rsa || (cat /dev/zero | ssh-keygen -q -P '' -f /home/vagrant/.ssh/id_rsa)
+  cat /home/vagrant/.ssh/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys
+  chown -R vagrant:vagrant /home/vagrant/
+
+  yum install -y gcc make perl kernel-uek-devel elfutils-libelf-devel bzip2 tar
+  yum update -y
+  /sbin/rcvboxadd quicksetup all
+
+  SHELL
+end

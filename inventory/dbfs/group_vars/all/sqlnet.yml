@@ -1,0 +1,31 @@
+---
+
+oracle_tnsnames_config:
+  dg19_orclpdb:
+    connect:
+      service_name: orclpdb
+    address:
+      - host: oradg1
+      - host: oradg2
+
+  dg19_db19dg1:
+    connect:
+      service_name: db19u1_DGMGRL
+    address:
+      - host: oradg1
+
+  dg19_db19dg2:
+    connect:
+      service_name: db19u2_DGMGRL
+    address:
+      - host: oradg2
+
+#sqlnet_installed:
+#      - home: db19-si-ee
+#        sqlnet: sqlnetalias1
+#        state: present
+
+sqlnet_config:
+  sqlnetalias1:
+    - {name: "ADR_BASE", value: "/u01/app/oracle/" }
+    - {name: "SQLNET.ALLOWED_LOGON_VERSION_CLIENT", value: "12" }

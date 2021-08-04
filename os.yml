@@ -1,0 +1,17 @@
+---
+
+
+ - name: Host configuration
+   hosts: "{{ hostgroup }}"
+   become: yes
+   roles:
+      - common
+      - orahost
+      - orahost-storage
+      - cxoracle
+      - orahost-logrotate
+
+   post_tasks:
+      - name: Restart autofs
+        service: name=autofs enabled=yes state=restarted
+        tags: autofs

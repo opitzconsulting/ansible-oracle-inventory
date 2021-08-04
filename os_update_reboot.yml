@@ -1,0 +1,42 @@
+---
+# This Playbook is used in Cloud Environments after the
+# deployment of the VM.
+# Use it as the 1st playbook for deployment of ansible-oracle
+#
+- name: yum update and reboot
+  hosts: "{{ hostgroup }}"
+  become: yes
+  gather_facts: no
+  tasks:
+    - name: Wait 300 seconds for Connection
+      wait_for_connection:
+        timeout: 300
+
+    - name: yum update yum packages 1st
+      package:
+        name: "yum*"
+        state: latest
+      register: yumyumstate
+
+    - debug: msg="{{ yumyumstate.results }}"
+
+    - name: Kernel Update with later Reboot
+      package:
+        name: "kernel-uek"
+        state: latest
+      register: kernelstate
+
+    - debug: msg="{{ kernelstate.results }}"
+
+    - name: yum update
+      package:
+        name: "*"
+        state: latest
+      register: updatestate
+
+    - debug: msg="{{ kernelstate.results }}"
+
+    - name: reboot due to Kernel Update
+      reboot:
+        reboot_timeout: 180
+      when: kernelstate.changed
