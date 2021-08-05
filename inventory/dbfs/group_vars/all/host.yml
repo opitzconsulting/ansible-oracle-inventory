@@ -1,24 +1,29 @@
-  configure_public_yum_repo: False
-  configure_motd: False
+---
+configure_public_yum_repo: False
+configure_motd: False
 
-  configure_cluster: False
-  role_separation: False
-  configure_oracle_sudo: True
-  disable_EE_options: True
-  autostartup_service: true
+configure_cluster: False
+role_separation: False
+configure_oracle_sudo: True
+disable_EE_options: True
+autostartup_service: true
 
-  configure_hugepages_by: memory
-  size_in_gb_hugepages: 2
+configure_hugepages_by: memory
 
-  oracle_stage: /u01/stage
+# disable hugepages on small systems
+# don't forget to enable use_large_pages in oracle parameter
+# size_in_gb_hugepages: 2
+size_in_gb_hugepages: 0
 
-  configure_host_disks: True
+oracle_stage: /u01/stage
 
-  host_fs_layout:
-    - vgname: vgora
-      state: present
-      filesystem:
-        - {mntp: /u01, lvname: lvorabase, lvsize: 25G, fstype: xfs}
-        - {mntp: /u02, lvname: lvoradata, lvsize: 25G, fstype: xfs, fsopts: "-m reflink=1 -m crc=1"}
-      disk:
-        - {device: /dev/sdb, pvname: /dev/sdb1}
+configure_host_disks: True
+
+host_fs_layout:
+  - vgname: vgora
+    state: present
+    filesystem:
+      - {mntp: /u01, lvname: lvorabase, lvsize: 25G, fstype: xfs}
+      - {mntp: /u02, lvname: lvoradata, lvsize: 25G, fstype: xfs, fsopts: "-m reflink=1 -m crc=1"}
+    disk:
+      - {device: /dev/sdb, pvname: /dev/sdb1}

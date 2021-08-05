@@ -38,7 +38,8 @@ oracle_database_DB1:
     - {name: deferred_segment_creation , value: 'false', scope: both, state: present}
     - {name: filesystemio_options , value: 'setall', scope: spfile, state: present}
     - {name: job_queue_processes , value: '10', scope: both, state: present}
-    - {name: use_large_pages ,value: 'ONLY', scope: spfile, state: present}
+  # Disable forcing hugepages on really small systems
+  #  - {name: use_large_pages ,value: 'ONLY', scope: spfile, state: present}
     - {name: log_archive_dest_1 , value: 'location=USE_DB_RECOVERY_FILE_DEST', scope: both, state: present}
   #  - {name: dg_broker_start, value: 'false', scope: both, state: present, dbca: False}
   #  - {name: log_archive_config , value: 'DG_CONFIG=(db19u1, db19u2)', scope: both, state: present, dbca: False}
