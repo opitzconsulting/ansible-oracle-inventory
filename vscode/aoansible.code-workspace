@@ -1,0 +1,37 @@
+{
+  "folders": [
+    {
+      "uri": "vscode-remote://ssh-remote+aoansible/home/vagrant/git"
+    }
+  ],
+  "remoteAuthority": "ssh-remote+aoansible",
+  "settings": {
+    "yaml.format.enable": true,
+    "recommendations": [
+      "ms-vscode-remote.remote-ssh",
+      "tomaciazek.ansible"
+    ],
+    "remote.SSH.defaultExtensions": [
+      "dbaeumer.vscode-eslint",
+      "davidanson.vscode-markdownlint",
+      "eamodio.gitlens",
+      "foxundermoon.shell-format",
+      "redhat.vscode-yaml",
+      "timonwong.shellcheck",
+      "tomaciazek.ansible",
+      "vscoss.vscode-ansible",
+      "yzhang.markdown-all-in-one"
+    ],
+    "remote.extensionKind": {
+      "vscoss.vscode-ansible": "ui",
+      "davidanson.vscode-markdownlint": "workspace",
+      "dbaeumer.vscode-eslint": "workspace",
+      "eamodio.gitlens": "workspace",
+      "foxundermoon.shell-format": "workspace",
+      "redhat.vscode-yaml": "workspace",
+      "timonwong.shellcheck": "workspace",
+      "tomaciazek.ansible": "workspace",
+      "yzhang.markdown-all-in-one": "workspace"
+    }
+  }
+}
