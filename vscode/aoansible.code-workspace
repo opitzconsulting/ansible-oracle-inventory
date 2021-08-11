@@ -19,11 +19,9 @@
       "redhat.vscode-yaml",
       "timonwong.shellcheck",
       "tomaciazek.ansible",
-      "vscoss.vscode-ansible",
       "yzhang.markdown-all-in-one"
     ],
     "remote.extensionKind": {
-      "vscoss.vscode-ansible": "ui",
       "davidanson.vscode-markdownlint": "workspace",
       "dbaeumer.vscode-eslint": "workspace",
       "eamodio.gitlens": "workspace",
