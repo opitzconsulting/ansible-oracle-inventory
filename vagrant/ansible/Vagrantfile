@@ -44,7 +44,7 @@ Vagrant.configure("2") do |config|
 	test -d /home/vagrant/git || mkdir /home/vagrant/git
 	cd /home/vagrant/git
 	test -d /home/vagrant/git/ansible-oracle || git clone -b oc --recursive https://github.com/opitzconsulting/ansible-oracle.git
-	# test -d /home/vagrant/git/ansible-oracle-inventory || git clone --recursive https://github.com/opitzconsulting/ansible-oracle.git
+	test -d /home/vagrant/git/ansible-oracle-inventory || git clone --recursive https://github.com/opitzconsulting/ansible-oracle-inventory.git
 
   chown -R vagrant:vagrant /home/vagrant/git
 
