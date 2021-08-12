@@ -1,0 +1,28 @@
+---
+configure_public_yum_repo: False
+configure_motd: False
+
+configure_cluster: False
+role_separation: False
+configure_oracle_sudo: True
+disable_EE_options: True
+autostartup_service: true
+
+configure_hugepages_by: memory
+
+# disable hugepages on small systems
+# don't forget to enable use_large_pages in oracle parameter
+# size_in_gb_hugepages: 2
+size_in_gb_hugepages: 0
+
+oracle_stage: /u01/stage
+
+configure_host_disks: True
+
+host_fs_layout:
+  - vgname: vgora
+    state: present
+    filesystem:
+      - {mntp: /u01, lvname: lvorabase, lvsize: 40G, fstype: xfs}
+    disk:
+      - {device: /dev/sdb, pvname: /dev/sdb1}
