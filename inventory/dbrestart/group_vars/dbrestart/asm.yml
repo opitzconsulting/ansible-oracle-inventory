@@ -1,8 +1,8 @@
 ---
 oracle_install_version_gi: 19.3.0.0
-apply_patches_gi: no
+apply_patches_gi: yes
 gi_patches:
-  "{{ gi_patches_config['19.4.0.0.190716'] }}"
+  "{{ gi_patches_config['19.12.0.0.210720'] }}"
 
 device_persistence: asmlib
 oracle_asm_init_dg: data
