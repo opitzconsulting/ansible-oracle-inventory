@@ -6,6 +6,9 @@
   ],
   "remoteAuthority": "ssh-remote+aoansible",
   "settings": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.detectIndentation": true,
     "yaml.format.enable": true,
     "recommendations": [
       "ms-vscode-remote.remote-ssh",
