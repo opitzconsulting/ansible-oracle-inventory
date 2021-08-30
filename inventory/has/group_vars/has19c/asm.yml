@@ -1,6 +1,8 @@
 ---
 oracle_install_version_gi: 19.3.0.0
-apply_patches_gi: yes
+oracle_home_gi: /u01/app/oracle/19/grid
+
+apply_patches_gi: no
 gi_patches:
   "{{ gi_patches_config['19.12.0.0.210720'] }}"
 
