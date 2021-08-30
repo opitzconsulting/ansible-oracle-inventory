@@ -4,6 +4,7 @@
  - name: Database Server Patching
    hosts: "{{ hostgroup }}"
    become: yes
+   any_errors_fatal: true
    roles:
       - oraswdb-manage-patches
       - oradb-datapatch

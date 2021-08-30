@@ -4,6 +4,7 @@
  - name: Database Server Installation
    hosts: "{{ hostgroup }}"
    become: yes
+   any_errors_fatal: true
    roles:
       - oraswdb-install
       - oraswdb-manage-patches

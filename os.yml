@@ -4,6 +4,7 @@
  - name: Host configuration
    hosts: "{{ hostgroup }}"
    become: yes
+   any_errors_fatal: true
    roles:
       - common
       - orahost

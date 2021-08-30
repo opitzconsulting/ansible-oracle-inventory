@@ -2,6 +2,7 @@
  - name: Database Server Database Creation
    hosts: "{{ hostgroup }}"
    become: yes
+   any_errors_fatal: true
    roles:
       - oradb-manage-db
       - oradb-manage-pdb
