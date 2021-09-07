@@ -1,6 +1,41 @@
 apply_patches_db: True
 db_homes_config:
 
+  db1912-si-ee: &db1912-si-ee
+    home: db1912-si-ee
+    version: 19.3.0.0
+    oracle_home: /u01/app/oracle/product/19/db1912-si-ee
+    edition: EE
+    opatch_minversion: 12.2.0.1.25
+    opatch:
+        # Remove Oracle Database 19c Important Recommended One-off Patches (Doc ID 555.1)
+      - { patchid: 32522300, state: absent, stop_processes: True}
+      - { patchid: 31143146, state: absent, stop_processes: True}
+      - { patchid: 31602782, state: absent, excludeUPI: 24359090, stop_processes: True}
+      - { patchid: 32919937, state: absent, excludeUPI: 24372674, stop_processes: True}
+      - { patchid: 33144001, state: absent, excludeUPI: 24351857, stop_processes: True}
+        # New Patches
+      - patchid: 32904851
+        # Database Release Update 19.12.0.0.210720
+        patchversion: 19.12.0.0.210720
+        stop_processes: True
+        state: present
+        path: 19.12.0.0.210720/gi/32895426/32904851
+      - patchid: 32916816
+        # OCW Release Update 19.12.0.0.210720
+        stop_processes: True
+        state: present
+        path: 19.12.0.0.210720/gi/32895426/32916816
+      - patchid: 32876380
+        # Oracle JavaVM Component Release Update (OJVM RU) 19.12.0.0.210720
+        stop_processes: True
+        state: present
+        path: 19.12.0.0.210720/ojvm/p32876380_190000_Linux-x86-64.zip
+        # Oracle Database 19c Important Recommended One-off Patches (Doc ID 555.1)
+      - { patchid: 31602782, path: 19.12.0.0.210720/p31602782_1912000DBRU_Linux-x86-64.zip , state: present, stop_processes: True}
+      - { patchid: 32919937, path: 19.12.0.0.210720/p32919937_1912000DBRU_Linux-x86-64.zip , state: present, stop_processes: True}
+      - { patchid: 33144001, path: 19.12.0.0.210720/p33144001_1912000DBRU_Linux-x86-64.zip , state: present, stop_processes: True}
+
   db1911-si-ee: &db1911-si-ee
     home: db1911-si-ee
     version: 19.3.0.0
@@ -14,7 +49,7 @@ db_homes_config:
         stop_processes: True
         state: present
         path: 19.11.0.0.210420/gi/32545008/32545013
-      - patchid: 32399816
+      - patchid: 32579761
         # OCW Release Update 19.11.0.0.210420
         stop_processes: True
         state: present
@@ -101,7 +136,7 @@ db_homes_config:
   # use this mapping for fast change between the Release Updates
   # <<: * => merge values from alias and overwrite oracle_home + home
   db19-si-ee:
-    << : *db1911-si-ee
+    << : *db1912-si-ee
     imagename: db_home_19.11.zip
     oracle_home: /u01/app/oracle/product/19/db1
     home: db19-si-ee
