@@ -1,0 +1,9 @@
+---
+
+- name: Create Golden-Images for Oracle Database, Oracle Restart
+  hosts: "{{ hostgroup }}"
+  become: yes
+  any_errors_fatal: true
+  roles:
+    - oraswdb-golden-image
+    - oraswgi-golden-image

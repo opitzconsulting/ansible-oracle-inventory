@@ -4,3 +4,5 @@
   oracle_sw_unpack: False
 
   oracle_stage_remote: /sw/oracle/linux64
+
+  golden_image_dest: /u01/golden
