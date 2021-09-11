@@ -2,7 +2,7 @@
 
 
  - name: Database Server Patching
-   hosts: "{{ hostgroup }}"
+   hosts: "{{ hostgroup | default('all') }}"
    become: yes
    any_errors_fatal: true
    roles:

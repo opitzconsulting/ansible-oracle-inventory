@@ -1,6 +1,6 @@
 ---
 - name: Oracle Grid Infrastructure / Restart installation & ASM Configuration
-  hosts: "{{ hostgroup }}"
+  hosts: "{{ hostgroup | default('all') }}"
   become: yes
   any_errors_fatal: true
   roles:
