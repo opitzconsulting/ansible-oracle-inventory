@@ -4,14 +4,14 @@ oracle_home_gi: /u01/app/oracle/19/grid
 
 oracle_install_image_gi: grid_home_19.11.zip
 
-apply_patches_gi: no
+apply_patches_gi: false
 gi_patches:
   "{{ gi_patches_config['19.12.0.0.210720'] }}"
 
 device_persistence: asmlib
 oracle_asm_init_dg: data
 
-asm_diskgroups:        # ASM Diskgroups used for DB-storage. Should map to dict asm_storage_layout. 
+asm_diskgroups:        # ASM Diskgroups used for DB-storage. Should map to dict asm_storage_layout.
   - diskgroup: data
     state: present
     properties:

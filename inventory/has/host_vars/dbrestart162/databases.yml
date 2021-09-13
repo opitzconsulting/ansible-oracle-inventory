@@ -7,7 +7,7 @@ rman_controlfile_autobackup_disk: "'/u01/rmanbackup/%d/%d_%F'"
 rman_device_type_disk: 'PARALLELISM 1 BACKUP TYPE TO COMPRESSED BACKUPSET'
 
 oracle_databases:
-  - "{{ oracle_database_DB1 }}"
+  - "{{ oracle_database_db1 }}"
 
 oracle_pdbs:
-  - "{{ oracle_pdb_DB1_ORCLPDB }}"
+  - "{{ oracle_pdb_db1_orclpdb }}"

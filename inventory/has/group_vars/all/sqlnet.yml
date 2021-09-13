@@ -20,12 +20,12 @@ oracle_tnsnames_config:
     address:
       - host: oradg2
 
-#sqlnet_installed:
-#      - home: db19-si-ee
-#        sqlnet: sqlnetalias1
-#        state: present
+# sqlnet_installed:
+#   - home: db19-si-ee
+#     sqlnet: sqlnetalias1
+#     state: present
 
 sqlnet_config:
   sqlnetalias1:
-    - {name: "ADR_BASE", value: "/u01/app/oracle/" }
-    - {name: "SQLNET.ALLOWED_LOGON_VERSION_CLIENT", value: "12" }
+    - {name: "ADR_BASE", value: "/u01/app/oracle/"}
+    - {name: "SQLNET.ALLOWED_LOGON_VERSION_CLIENT", value: "12"}

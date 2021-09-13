@@ -2,20 +2,20 @@
 oracle_install_version_gi: 21.3.0.0
 oracle_home_gi: /u01/app/oracle/21/grid
 
-apply_patches_gi: no
+apply_patches_gi: false
 # gi_patches:
 #   "{{ gi_patches_config['21.04.0.0.210720'] }}"
 
 device_persistence: asmlib
 oracle_asm_init_dg: data
 
-asm_diskgroups:        # ASM Diskgroups used for DB-storage. Should map to dict asm_storage_layout. 
+asm_diskgroups:        # ASM Diskgroups used for DB-storage. Should map to dict asm_storage_layout.
   - diskgroup: data
     state: present
     properties:
       - {redundancy: external, ausize: 4}
     attributes:
-      - {name: compatible.rdbms, value: 21.0.0.0.0}
+      - {name: compatible.rdbms, value: 19.0.0.0.0}
       - {name: compatible.asm, value: "21.0.0.0.0"}
     disk:
       - {device: /dev/sdc, asmlabel: data01}
@@ -24,7 +24,7 @@ asm_diskgroups:        # ASM Diskgroups used for DB-storage. Should map to dict 
     properties:
       - {redundancy: external, ausize: 4}
     attributes:
-      - {name: compatible.rdbms, value: 21.0.0.0.0}
+      - {name: compatible.rdbms, value: 19.0.0.0.0}
       - {name: compatible.asm, value: 21.0.0.0.0}
     disk:
       - {device: /dev/sdd, asmlabel: fra01}

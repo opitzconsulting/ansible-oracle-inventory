@@ -2,7 +2,7 @@
 
 - name: Create Golden-Images for Oracle Database, Oracle Restart
   hosts: "{{ hostgroup | default('all') }}"
-  become: yes
+  become: true
   any_errors_fatal: true
   roles:
     - oraswdb-golden-image

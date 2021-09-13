@@ -10,6 +10,7 @@
       - oradb-manage-tablespace
       - oradb-manage-redo
       - oradb-manage-profiles
+      - oradb-manage-statspack
       - oradb-manage-roles
       - oradb-manage-users
       - oradb-manage-grants

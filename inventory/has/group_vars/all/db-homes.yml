@@ -1,4 +1,5 @@
-apply_patches_db: True
+---
+apply_patches_db: true
 db_homes_config:
 
   db2103-gi-ee: &db2103-gi-ee
@@ -49,23 +50,15 @@ db_homes_config:
   # use this mapping for fast change between the Release Updates
   # <<: * => merge values from alias and overwrite oracle_home + home
   db21-gi-ee:
-    << : *db2103-gi-ee
+    <<: *db2103-gi-ee
     oracle_home: /u01/app/oracle/product/21/db1
     home: db21-gi-ee
   db19-gi-ee:
-    << : *db1911-gi-ee
+    <<: *db1911-gi-ee
     imagename: db_home_19.11.zip
     oracle_home: /u01/app/oracle/product/19/db1
     home: db19-gi-ee
   db18-gi-ee:
-    << : *db1814-gi-ee
+    <<: *db1814-gi-ee
     # oracle_home: /u01/app/oracle/product/18/db1
     # home: db18-gi-ee
-
-db_homes_installed:
-  - home: db19-gi-ee
-    apply_patches: True
-    state: present
-  # - home: db21-gi-ee
-  #   apply_patches: True
-  #   state: present

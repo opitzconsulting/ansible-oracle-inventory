@@ -1,12 +1,14 @@
 ---
-configure_public_yum_repo: False
-configure_motd: False
+configure_public_yum_repo: false
+configure_motd: false
 
-configure_cluster: False
-role_separation: False
-configure_oracle_sudo: True
-disable_EE_options: True
+configure_cluster: false
+role_separation: false
+configure_oracle_sudo: true
+disable_EE_options: true
 autostartup_service: true
+
+control_management_pack_access: NONE
 
 configure_hugepages_by: memory
 
@@ -17,7 +19,7 @@ size_in_gb_hugepages: 0
 
 oracle_stage: /u01/stage
 
-configure_host_disks: True
+configure_host_disks: true
 
 host_fs_layout:
   - vgname: vgora
