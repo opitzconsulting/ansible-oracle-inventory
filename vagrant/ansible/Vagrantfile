@@ -32,7 +32,8 @@ Vagrant.configure("2") do |config|
   systemctl restart sshd.service
 
   yum install -y oracle-epel-release-el8
-  yum install -y git mc tree tig glances bash-completion ansible
+  yum install -y git mc tree tig glances bash-completion ansible python3-pip
+  pip3 install "ansible-lint[yamllint]"
 
   lvresize -L 2g /dev/rootvg/swaplv
   swapoff -a
