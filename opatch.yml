@@ -1,10 +1,9 @@
 ---
 
-
- - name: Database Server Patching
-   hosts: "{{ hostgroup | default('all') }}"
-   become: yes
-   any_errors_fatal: true
-   roles:
-      - oraswdb-manage-patches
-      - oradb-datapatch
+- name: Database Server Patching
+  hosts: "{{ hostgroup | default('all') }}"
+  become: yes
+  any_errors_fatal: true
+  roles:
+    - oraswdb-manage-patches
+    - oradb-datapatch

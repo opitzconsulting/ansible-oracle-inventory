@@ -5,4 +5,5 @@
   any_errors_fatal: true
   roles:
     - oraswgi-install
-    - oraasm-createdg
+    - oraswgi-manage-patches
+    - oraasm-manage-diskgroups
