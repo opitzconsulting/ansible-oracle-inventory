@@ -1,0 +1,8 @@
+---
+is_sw_source_local: true
+oracle_sw_copy: False
+oracle_sw_unpack: False
+
+oracle_stage_remote: /sw/oracle/linux64
+
+golden_image_dest: /u01/golden

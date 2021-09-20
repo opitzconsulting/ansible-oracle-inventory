@@ -5,12 +5,10 @@ configure_motd: false
 configure_cluster: false
 role_separation: false
 configure_oracle_sudo: true
-
-# yamllint disable-line rule:var-naming
 disable_EE_options: true
-control_management_pack_access: NONE
-
 autostartup_service: true
+
+control_management_pack_access: NONE
 
 configure_hugepages_by: memory
 
@@ -24,10 +22,15 @@ oracle_stage: /u01/stage
 configure_host_disks: true
 
 host_fs_layout:
-  - vgname: vgora
+  - vgname: oravg
     state: present
     filesystem:
-      - {mntp: /u01, lvname: lvorabase, lvsize: 25G, fstype: xfs}
-      - {mntp: /u02, lvname: lvoradata, lvsize: 25G, fstype: xfs, fsopts: "-m reflink=1 -m crc=1"}
+      - {mntp: /u01, lvname: orabaselv, lvsize: 40G, fstype: xfs}
     disk:
       - {device: /dev/sdb, pvname: /dev/sdb1}
+  - vgname: rootvg
+    state: present
+    filesystem:
+      - {mntp: /tmp, lvname: tmplv, lvsize: 1200m, fstype: ext4}
+    disk:
+      - {device: /dev/sda, pvname: /dev/sda2}

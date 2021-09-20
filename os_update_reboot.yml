@@ -4,7 +4,7 @@
 # Use it as the 1st playbook for deployment of ansible-oracle
 #
 - name: yum update and reboot
-  hosts: "{{ hostgroup }}"
+  hosts: "{{ hostgroup | default('all') }}"
   become: yes
   gather_facts: no
   tasks:

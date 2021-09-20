@@ -1,0 +1,5 @@
+---
+- import_playbook: os.yml
+- import_playbook: swgi.yml
+- import_playbook: swdb.yml
+- import_playbook: manage-db.yml

@@ -6,6 +6,11 @@ rman_channel_disk: "format '/u01/rmanbackup/%d/%d_%T_%U'"
 rman_controlfile_autobackup_disk: "'/u01/rmanbackup/%d/%d_%F'"
 rman_device_type_disk: 'PARALLELISM 1 BACKUP TYPE TO COMPRESSED BACKUPSET'
 
+db_homes_installed:
+  - home: db21-gi-ee
+    apply_patches: true
+    state: present
+
 oracle_databases:
   - "{{ oracle_database_db1 }}"
 

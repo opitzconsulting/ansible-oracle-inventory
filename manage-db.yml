@@ -1,17 +1,18 @@
 ---
- - name: Database Server Database Creation
-   hosts: "{{ hostgroup }}"
-   become: yes
-   any_errors_fatal: true
-   roles:
-      - oradb-manage-db
-      - oradb-manage-pdb
-      - oradb-manage-parameters
-      - oradb-manage-tablespace
-      - oradb-manage-redo
-      - oradb-manage-profiles
-      - oradb-manage-roles
-      - oradb-manage-users
-      - oradb-manage-grants
-      - oradb-manage-services
-      - oradb-rman
+- name: Database Server Database Creation
+  hosts: "{{ hostgroup | default('all') }}"
+  become: yes
+  any_errors_fatal: true
+  roles:
+    - oradb-manage-db
+    - oradb-manage-pdb
+    - oradb-manage-parameters
+    - oradb-manage-tablespace
+    - oradb-manage-redo
+    - oradb-manage-profiles
+    - oradb-manage-statspack
+    - oradb-manage-roles
+    - oradb-manage-users
+    - oradb-manage-grants
+    - oradb-manage-services
+    - oradb-rman

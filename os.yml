@@ -1,18 +1,17 @@
 ---
 
+- name: Host configuration
+  hosts: "{{ hostgroup | default('all') }}"
+  become: true
+  any_errors_fatal: true
+  roles:
+    - common
+    - orahost
+    - orahost-storage
+    - cxoracle
+    - orahost-logrotate
 
- - name: Host configuration
-   hosts: "{{ hostgroup }}"
-   become: yes
-   any_errors_fatal: true
-   roles:
-      - common
-      - orahost
-      - orahost-storage
-      - cxoracle
-      - orahost-logrotate
-
-   post_tasks:
-      - name: Restart autofs
-        service: name=autofs enabled=yes state=restarted
-        tags: autofs
+  post_tasks:
+    - name: Restart autofs
+      service: name=autofs enabled=yes state=restarted
+      tags: autofs

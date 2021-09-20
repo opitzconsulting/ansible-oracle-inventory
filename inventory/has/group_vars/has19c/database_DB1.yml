@@ -3,18 +3,18 @@
 # Don't forget to add the oracle_database_<name> to oracle_databases!
 #
 oracle_database_db1:
-  home: &db_config_home db19-si-ee
+  home: &db_config_home db19-gi-ee
   oracle_db_name: &oracle_db_name DB1
   oracle_db_type: SI                                   # Type of database (RAC,RACONENODE,SI)
   is_container: true
-  storage_type: FS                                     # Database storage to be used. ASM or FS.
+  storage_type: ASM                                     # Database storage to be used. ASM or FS.
   oracle_db_mem_totalmb: 1024                          # Amount of RAM to be used for SGA
   oracle_database_type: MULTIPURPOSE                   # MULTIPURPOSE|DATA_WAREHOUSING|OLTP
   redolog_size: 75M
   redolog_groups: 3
-  datafile_dest: /u02/oradata
-  recoveryfile_dest: /u02/fra
-  listener_name: LISTENER                            # This home will have a listener configured
+  datafile_dest: +DATA
+  recoveryfile_dest: +FRA
+  # listener_name: LISTENER                            # This home will have a listener configured
   listener_port: &cdb_listener_port 1521
   # *local_listener is used in initparam as an achor
   local_listener: &local_listener "'{{ ansible_hostname }}:1521'"
@@ -35,7 +35,7 @@ oracle_database_db1:
   init_parameters:
     - {name: audit_trail, value: 'NONE', scope: spfile, state: present}
     - {name: processes, value: '400', scope: spfile, state: present, dbca: false}
-    - {name: local_listener, value: *local_listener, scope: both, state: present}
+    # - {name: local_listener, value: *local_listener, scope: both, state: present}
     - {name: archive_lag_target, value: '900', scope: both, state: present}
     - {name: control_management_pack_access, value: '{{ control_management_pack_access }}', scope: both, state: present}
     - {name: control_file_record_keep_time, value: '30', scope: both, state: present}
@@ -58,8 +58,8 @@ oracle_database_db1:
     - {name: "_cursor_obsolete_threshold", value: '1024', scope: spfile, state: present}
     - {name: max_pdbs, value: '3', scope: both, state: present}
     - {name: clonedb, value: 'true', scope: spfile, state: present, dbca: false}
-    - {name: db_create_file_dest, value: '/u02/oradata', scope: both, state: present}
-    - {name: db_create_online_log_dest_1, value: '/u02/oradata', scope: both, state: present}
+    - {name: db_create_file_dest, value: '+DATA', scope: both, state: present}
+    - {name: db_create_online_log_dest_1, value: '+DATA', scope: both, state: present}
     # file_dest_size in bytes in 12.1.0.2 due to bug in DBCA
     - {name: db_recovery_file_dest_size, value: '10G', scope: both, state: present, dbca: false}
 
