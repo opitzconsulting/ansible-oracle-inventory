@@ -1,10 +1,10 @@
 ---
 oracle_install_version_gi: 19.3.0.0
-oracle_home_gi: /u01/app/oracle/19/grid
+oracle_home_gi: /u01/app/gridinfra/19
 
 # oracle_install_image_gi: grid_home_19.12.zip
 
-apply_patches_gi: true
+apply_patches_gi: false
 gi_patches:
   "{{ gi_patches_config['19.12.0.0.210720'] }}"
 

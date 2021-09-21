@@ -6,6 +6,9 @@
   become_user: root
   any_errors_fatal: true
   tasks:
+    - name: set new hostname
+      hostname:
+        name: "{{ inventory_hostname }}"
     - name: change /etc/hosts
       lineinfile:
         path: '/etc/hosts'

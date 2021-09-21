@@ -2,8 +2,6 @@
 configure_public_yum_repo: false
 configure_motd: false
 
-configure_cluster: false
-role_separation: false
 configure_oracle_sudo: true
 disable_EE_options: true
 autostartup_service: true
