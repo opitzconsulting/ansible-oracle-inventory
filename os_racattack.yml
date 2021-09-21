@@ -1,0 +1,14 @@
+---
+
+- name: Host configuration for Vagrant
+  hosts: "{{ hostgroup | default('all') }}"
+  become: true
+  become_user: root
+  any_errors_fatal: true
+  tasks:
+    - name: change /etc/hosts
+      lineinfile:
+        path: '/etc/hosts'
+        regexp: '.* {{ ansible_hostname }}.*'
+        line: '{{ ansible_eth1.ipv4.address }} {{ ansible_fqdn }} {{ ansible_hostname }}'
+        backup: true
