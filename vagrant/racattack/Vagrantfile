@@ -5,14 +5,6 @@
 VAGRANTFILE_API_VERSION = "2"
 
 #############################
-## 20141221
-## Alvaro Miranda
-## http://kikitux.net
-## alvaro at kikitux.net
-## Mikael Sandström
-## http://oravirt.wordpress.com
-## oravirt at gmail.com
-#############################
 #### BEGIN CUSTOMIZATION ####
 #############################
 #define number of nodes
@@ -152,11 +144,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  if File.directory?("12cR1")
-    # our shared folder for oracle 12c installation files
-    config.vm.synced_folder "12cR1", "/media/sf_12cR1", :mount_options => ["dmode=777","fmode=777","uid=54320","gid=54321"]
-  end
-
   ## IMPORTANT
   ## vagrant work up to down, high node goes first
   ## so when node 1 is ready, we can configure rac and all nodes will be up
@@ -167,13 +154,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.define vm_name = "collaba%01d" % i do |config|
       puts " "
       config.vm.hostname = "#{vm_name}.racattack"
-      lanip = "192.168.78.#{i+90}"
+      lanip = "192.168.56.#{i+90}"
       puts vm_name + " eth1 lanip  :" + lanip
       config.vm.provider :virtualbox do |vb|
         vb.name = vm_name + "." + Time.now.strftime("%y%m%d%H%M")
         vb.customize ["modifyvm", :id, "--memory", memory_APPLICATION]
         vb.customize ["modifyvm", :id, "--cpus", num_CORE]
-        vb.customize ["modifyvm", :id, "--groups", "/collab"]
+        vb.customize ["modifyvm", :id, "--groups", "/ansible-oracle"]
       end
       config.vm.network :private_network, ip: lanip
     end
@@ -193,7 +180,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         vb.name = vm_name + "." + Time.now.strftime("%y%m%d%H%M")
         vb.customize ["modifyvm", :id, "--memory", memory_LEAF_INSTANCES]
         vb.customize ["modifyvm", :id, "--cpus", num_CORE]
-        vb.customize ["modifyvm", :id, "--groups", "/collab"]
+        vb.customize ["modifyvm", :id, "--groups", "/ansible-oracle"]
       end
       config.vm.network :private_network, ip: lanip
       config.vm.network :private_network, ip: privip
@@ -204,6 +191,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # this is to start machines higher to lower
     i = num_DB_INSTANCES+1-i
     config.vm.define vm_name = "collabn%01d" % i do |config|
+
+      config.vm.disk :disk, size: "150GB", name: "#{vm_name}_oracle"
+
       puts " "
       config.vm.hostname = "#{vm_name}.racattack"
       lanip = "192.168.56.#{i+170}"
@@ -215,9 +205,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         vb.customize ["modifyvm", :id, "--memory", memory_DB_INSTANCES]
         vb.customize ["modifyvm", :id, "--cpus", num_CORE]
         vb.customize ["modifyvm", :id, "--groups", "/ansible-oracle"]
-        #first shared disk port
+
+        # first shared disk port
         port=2
-        #how many shared disk
+        # how many shared disk
         (1..count_shared_disk).each do |disk|
           file_to_dbdisk = "racattack-shared-disk"
           if !File.exist?("#{file_to_dbdisk}#{disk}.vdi") and num_DB_INSTANCES==i
@@ -234,26 +225,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       end
       config.vm.network :private_network, ip: lanip
       config.vm.network :private_network, ip: privip
-      if not ENV['setup'] == "clean"
-        if vm_name == "collabn1" 
-          puts vm_name + " dns server role is master"
-          # config.vm.provision :shell, :inline => "sh /media/stagefiles/named_master.sh"
-          # if ENV['setup']
-          #   config.vm.provision :shell, :inline => "bash /media/stagefiles/run_ansible_playbook.sh #{cluster_type} #{ENV['giver']} #{ENV['dbver']}" 
-          # end
-        end
-        if vm_name == "collabn2" 
-          puts vm_name + " dns server role is slave"
-          config.vm.provision :shell, :inline => "sh /media/stagefiles/named_slave.sh"
-        end
-      end
     end
   end
-
-  # This network is optional, that's why is at the end
-
-  # Create a public network, which generally matched to bridged network.
-  #default will ask what network to bridge
-  #config.vm.network :public_network
-
 end
