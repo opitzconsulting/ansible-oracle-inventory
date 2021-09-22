@@ -9,9 +9,28 @@
     - name: set new hostname
       hostname:
         name: "{{ inventory_hostname }}"
-    - name: change /etc/hosts
+    - name: remove host from /etc/hosts
       lineinfile:
         path: '/etc/hosts'
-        regexp: '.* {{ ansible_hostname }}.*'
-        line: '{{ ansible_eth1.ipv4.address }} {{ ansible_fqdn }} {{ ansible_hostname }}'
+        regexp: '.*{{ ansible_hostname }}.*'
+        state: absent
         backup: true
+
+    - name: extend swaplv
+      lvol:
+        vg: rootvg
+        lv: swaplv
+        size: 3g
+        shrink: false
+      notify:
+        - swap off
+        - mkswap
+        - swap on
+
+  handlers:
+    - name: swap off
+      command: swapoff -a
+    - name: mkswap
+      command: mkswap /dev/rootvg/swaplv
+    - name: swap on
+      command: swapon -a

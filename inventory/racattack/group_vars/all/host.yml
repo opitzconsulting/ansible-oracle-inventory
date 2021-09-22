@@ -1,6 +1,7 @@
 ---
 configure_public_yum_repo: false
 configure_motd: false
+configure_etc_hosts: true
 
 configure_oracle_sudo: true
 disable_EE_options: true
