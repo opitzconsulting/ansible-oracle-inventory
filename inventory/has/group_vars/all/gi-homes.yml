@@ -19,7 +19,7 @@ gi_patches_config:
 
   # 19.11 is an example based on a GoldenImage with RU 19.11
   # Please add following variable:
-  # oracle_install_image_gi: grid_home_19.11.zip
+  # oracle_install_image_gi: restart_home_19.11.zip
   19.11.0.0.210720:
     19.3.0.0:  # Base Release
       opatch_minversion: 12.2.0.1.25

@@ -1,6 +1,6 @@
 ---
 configure_cluster: true
-role_separation: false
+role_separation: true
 
 configure_ssh: true
 
