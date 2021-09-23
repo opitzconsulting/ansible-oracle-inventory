@@ -13,34 +13,34 @@ num_LEAF_INSTANCES    = 0
 num_DB_INSTANCES      = 2
 #
 #define number of cores for guest
-num_CORE              = 1
-#
-#define memory for each type of node in MBytes
-#
-#for leaf nodes, the minimun can be  2300, otherwise pre-check will fail for
-#automatic ulimit values calculated based on ram
-#
-#for database nodes, the minimum suggested is 3072 for standard cluster
-#for flex cluster, consider 4500 or more
-#
+num_CORE              = 2
+
+# define memory for each type of node in MBytes
+
+# for leaf nodes, the minimun can be  2300, otherwise pre-check will fail for
+# automatic ulimit values calculated based on ram
+
+# for database nodes, the minimum suggested is 3072 for standard cluster
+# for flex cluster, consider 4500 or more
+
 memory_APPLICATION    = 1500
 memory_LEAF_INSTANCES = 2300
-memory_DB_INSTANCES   = 4096
-#        
-#size of shared disk in GB
-size_shared_disk      = 5
-#number of shared disks
+memory_DB_INSTANCES   = 7168
+       
+# size of shared disk in GB
+size_shared_disk      = 15
+# number of shared disks
 count_shared_disk     = 2
 #
 #############################
 ##### END CUSTOMIZATION #####
 #############################
 
-#if not defined, set defaults
+# if not defined, set defaults
 ENV['giver']||="19.3.0.0"
 ENV['dbver']||=ENV['giver']
 
-#this will give us version in format of 12102
+# this will give us version in format of 12102
 giver_i = ENV['giver'].gsub('.','').to_i
 dbver_i = ENV['dbver'].gsub('.','').to_i
 
@@ -52,7 +52,7 @@ if dbver_i > giver_i
 end
 
 # cluster_type 
-#define cluster type, standard or flex
+# define cluster type, standard or flex
 if ENV['setup'] == "standard"
   cluster_type = "standard"
 else
@@ -62,7 +62,7 @@ end
 # We need 1 DB HUB, so assume 1 even if configured as 0 
 num_DB_INSTANCES = 1 if num_DB_INSTANCES == 0
 
-#note: if num_LEAF_INSTANCES is 1 or more, cluster will be defaulted to flex
+# note: if num_LEAF_INSTANCES is 1 or more, cluster will be defaulted to flex
 cluster_type = "flex" if num_LEAF_INSTANCES > 0
 
 # Force cluster_type to standard if GI Version is 11.2.0.4 or lower
@@ -71,7 +71,7 @@ if giver_i < 12101
   num_LEAF_INSTANCES = 0
 end
 
-# #create inventory for ansible to run
+# create inventory for ansible to run
 # inventory_ansible = File.open("stagefiles/ansible-oracle/inventory/racattack","w")
 # inventory_ansible << "[racattack-application]\n"
 # (1..num_APPLICATION).each do |i|
@@ -111,7 +111,7 @@ end
 # EOF
 # SCRIPT
 
-#variable used to provide information only once
+# variable used to provide information only once
 give_info ||=true
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
@@ -122,7 +122,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Every Vagrant virtual environment requires a box to build off of.
   config.ssh.insert_key = false
-  config.vm.box = "Rendanic/oraclelinux-7.x"
+  config.vm.box = "Rendanic/oraclelinux-8.x"
 
   ## Virtualbox modifications
   ## we first setup memory and cpu
@@ -193,9 +193,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.define vm_name = "collabn%01d" % i do |config|
 
       config.vm.disk :disk, size: "150GB", name: "#{vm_name}_oracle"
+      config.vm.synced_folder ENV['VAGRANT_ANSIBLE_ORACLE_SW'], "/sw/oracle", disabled: false, mount_options: ["ro"]
 
       puts " "
-      config.vm.hostname = "#{vm_name}.racattack"
+      config.vm.hostname = "#{vm_name}-192-168-56-#{i+170}.nip.io"
       lanip = "192.168.56.#{i+170}"
       puts vm_name + " eth1 lanip  :" + lanip
       privip = "192.168.57.#{i+170}"
