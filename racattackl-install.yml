@@ -1,6 +1,9 @@
 ---
+#
+# ansible-playbook -i inventory/racattack/hosts.yml -e hostgroup=collabn racattackl-install.yml --skip-tags redolog
+#
 - import_playbook: os_racattack.yml
 - import_playbook: os.yml
 - import_playbook: swgi.yml
-# - import_playbook: swdb.yml
-# - import_playbook: manage-db.yml
+- import_playbook: swdb.yml
+- import_playbook: manage-db.yml
