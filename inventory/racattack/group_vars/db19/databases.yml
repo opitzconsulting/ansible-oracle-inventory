@@ -11,8 +11,8 @@ db_homes_installed:
     apply_patches: true
     state: present
 
-oracle_databases: []
-  # - "{{ oracle_database_dbr1 }}"
+oracle_databases:
+  - "{{ oracle_database_dbr1 }}"
 
-oracle_pdbs: []
-  # - "{{ oracle_pdb_dbr1_orclpdb }}"
+oracle_pdbs:
+  - "{{ oracle_pdb_dbr1_orclpdb }}"

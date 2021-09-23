@@ -3,7 +3,7 @@
 # Don't forget to add the oracle_database_<name> to oracle_databases!
 #
 oracle_database_dbr1:
-  home: &db_config_home db21-gi-ee
+  home: &db_config_home db19-gi-ee
   oracle_db_name: &oracle_db_name DBR1
   oracle_db_type: RAC                                   # Type of database (RAC,RACONENODE,SI)
   is_container: true
@@ -22,10 +22,11 @@ oracle_database_dbr1:
   flashback: false
   force_logging: true
   state: present
-  statspack:
-    purgedays: 14
-    snaplevel: 5
-    state: present
+  # Statspack is not supported in RAC at the moment
+  # statspack:
+  #   purgedays: 14
+  #   snaplevel: 5
+  #   state: present
   tablespaces:
     - {name: system, size: 10M, autoextend: true, next: 50M, maxsize: 4G, content: permanent, state: present, bigfile: false}
     - {name: sysaux, size: 10M, autoextend: true, next: 50M, maxsize: 4G, content: permanent, state: present, bigfile: false}
@@ -99,10 +100,11 @@ oracle_pdb_dbr1_orclpdb:
   pdb_name: ORCLPDB
   state: present
   profiles: "{{ oracle_default_profiles }}"
-  statspack:
-    purgedays: 14
-    snaplevel: 7
-    state: present
+  # Statspack is not supported in RAC at the moment
+  # statspack:
+  #   purgedays: 14
+  #   snaplevel: 7
+  #   state: present
 
   tablespaces:
     - {name: system, size: 10M, autoextend: true, next: 50M, maxsize: 4G, content: permanent, state: present, bigfile: false}
