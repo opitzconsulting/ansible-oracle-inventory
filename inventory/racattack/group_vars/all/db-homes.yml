@@ -1,0 +1,96 @@
+---
+apply_patches_db: true
+db_homes_config:
+
+  db2103-gi-ee: &db2103-gi-ee
+    home: db2103-gi-ee
+    version: 21.3.0.0
+    oracle_home: /u01/app/oracle/product/21/db2103-gi-ee
+    edition: EE
+    opatch_minversion: 12.2.0.1.24
+
+  db1912-gi-ee: &db1912-gi-ee
+    home: db1912-si-ee
+    version: 19.3.0.0
+    oracle_home: /u01/app/oracle/product/19/db1912-si-ee
+    edition: EE
+    opatch_minversion: 12.2.0.1.25
+    opatchauto:
+      - patchid: 30899722
+        patchversion: 19.12.0.0.200414
+        state: present
+        path: 19.12.0.0.210720/gi/32895426
+        subpatches:
+          - 32916816  # OCW Release Update 19.12.0.0.210720
+          - 32904851  # Database Release Update 19.12.0.0.210720
+    opatch:
+        # Remove Oracle Database 19c Important Recommended One-off Patches (Doc ID 555.1)
+      - {patchid: 32522300, state: absent, stop_processes: true}
+      - {patchid: 31143146, state: absent, stop_processes: true}
+      - {patchid: 31602782, state: absent, excludeUPI: 24359090, stop_processes: true}
+      - {patchid: 32919937, state: absent, excludeUPI: 24372674, stop_processes: true}
+      - {patchid: 33144001, state: absent, excludeUPI: 24351857, stop_processes: true}
+        # New Patches
+      # - patchid: 32876380
+      #   # Oracle JavaVM Component Release Update (OJVM RU) 19.12.0.0.210720
+      #   stop_processes: true
+      #   state: present
+      #   path: 19.12.0.0.210720/ojvm/p32876380_190000_Linux-x86-64.zip
+      #   # Oracle Database 19c Important Recommended One-off Patches (Doc ID 555.1)
+      # - {patchid: 31602782, path: 19.12.0.0.210720/p31602782_1912000DBRU_Linux-x86-64.zip, state: present, stop_processes: true}
+      # - {patchid: 32919937, path: 19.12.0.0.210720/p32919937_1912000DBRU_Linux-x86-64.zip, state: present, stop_processes: true}
+      # - {patchid: 33144001, path: 19.12.0.0.210720/p33144001_1912000DBRU_Linux-x86-64.zip, state: present, stop_processes: true}
+
+  db1911-gi-ee: &db1911-gi-ee
+    home: db1911-gi-ee
+    version: 19.3.0.0
+    oracle_home: /u01/app/oracle/product/19/db1911-gi-ee
+    edition: EE
+    opatch_minversion: 12.2.0.1.24
+
+  db1814-gi-ee: &db1814-gi-ee
+    home: db1814-gi-ee
+    version: 18.3.0.0
+    oracle_home: /u01/app/oracle/product/18/db1814-gi-ee
+    edition: EE
+    opatch_minversion: 12.2.0.1.19
+
+  db12201-gi-ee:
+    home: db12201-gi-ee
+    version: 12.2.0.1
+    oracle_home: /u01/app/oracle/product/12.2.0.1/db12201-gi-ee
+    edition: EE
+    dnfs: true
+    opatch_minversion: 12.2.0.1.13
+
+  db12102-gi-ee:
+    home: db12102-gi-ee
+    version: 12.1.0.2
+    oracle_home: /u01/app/oracle/product/12.1.0.2/db12102-gi-ee
+    edition: EE
+    dnfs: true
+    opatch_minversion: 12.2.0.1.13
+
+  db11204-gi-ee:
+    home: db11204-gi-ee
+    version: 11.2.0.4
+    oracle_home: /u01/app/oracle/product/11.2.0.4/db11204-gi-ee
+    edition: EE
+    opatch_minversion: 11.2.0.3.20
+
+  # Current Mapping of ORACLE_HOMEs
+  # use this mapping for fast change between the Release Updates
+  # <<: * => merge values from alias and overwrite oracle_home + home
+  db21-gi-ee:
+    <<: *db2103-gi-ee
+    oracle_home: /u01/app/oracle/product/21/db1
+    home: db21-gi-ee
+  db19-gi-ee:
+    <<: *db1912-gi-ee
+    # imagename: db_home_19.11.zip
+    oracle_home: /u01/app/oracle/product/19/db1
+    home: db19-gi-ee
+  db18-gi-ee:
+    <<: *db1814-gi-ee
+    # oracle_home: /u01/app/oracle/product/18/db1
+    # home: db18-gi-ee

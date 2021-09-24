@@ -8,6 +8,7 @@
     - common
     - orahost
     - orahost-storage
+    - orahost-ssh
     - cxoracle
     - orahost-logrotate
 

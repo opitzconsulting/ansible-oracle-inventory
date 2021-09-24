@@ -1,0 +1,36 @@
+---
+
+- name: Host configuration for Vagrant
+  hosts: "{{ hostgroup | default('all') }}"
+  become: true
+  become_user: root
+  any_errors_fatal: true
+  tasks:
+    - name: set new hostname
+      hostname:
+        name: "{{ inventory_hostname }}"
+    - name: remove host from /etc/hosts
+      lineinfile:
+        path: '/etc/hosts'
+        regexp: '.*{{ ansible_hostname }}.*'
+        state: absent
+        backup: true
+
+    - name: extend swaplv
+      lvol:
+        vg: rootvg
+        lv: swaplv
+        size: 3g
+        shrink: false
+      notify:
+        - swap off
+        - mkswap
+        - swap on
+
+  handlers:
+    - name: swap off
+      command: swapoff -a
+    - name: mkswap
+      command: mkswap /dev/rootvg/swaplv
+    - name: swap on
+      command: swapon -a

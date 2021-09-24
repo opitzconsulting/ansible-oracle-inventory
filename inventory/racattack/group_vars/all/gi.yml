@@ -1,0 +1,14 @@
+---
+configure_cluster: true
+role_separation: true
+
+configure_ssh: true
+
+oracle_gi_cluster_type: standard
+
+oracle_asm_init_dg: data
+oracle_password: Oracl3_4U
+oracle_scan: scan-192-168-56-179.nip.io
+oracle_scan_port: 1521
+oracle_gi_nic_pub: eth1
+oracle_gi_nic_priv: eth2
