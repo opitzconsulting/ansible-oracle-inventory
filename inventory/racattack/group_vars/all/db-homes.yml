@@ -87,7 +87,7 @@ db_homes_config:
     home: db21-gi-ee
   db19-gi-ee:
     <<: *db1912-gi-ee
-    imagename: db_home_19.11.zip
+    # imagename: db_home_19.11.zip
     oracle_home: /u01/app/oracle/product/19/db1
     home: db19-gi-ee
   db18-gi-ee:
