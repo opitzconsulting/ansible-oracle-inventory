@@ -3,13 +3,21 @@
 _This document is currently work in progress!_
 
 - [Example Inventories for ansible-oracle](#example-inventories-for-ansible-oracle)
-  - [ansible-oracle](#ansible-oracle)
-    - [Environment Preparation for ansible-oracle](#environment-preparation-for-ansible-oracle)
+  - [ansible-oracle - preparation](#ansible-oracle---preparation)
+    - [Install Ansible + Tools](#install-ansible--tools)
     - [Oracle Installationmedias & Patches](#oracle-installationmedias--patches)
-  - [Installation medias](#installation-medias)
-  - [OPatch](#opatch)
-  - [RUs/PSUs OneOff-Patches](#ruspsus-oneoff-patches)
-    - [List of Vagrant-Boxes](#list-of-vagrant-boxes)
+      - [Installation medias](#installation-medias)
+      - [OPatch](#opatch)
+      - [RUs/PSUs OneOff-Patches](#ruspsus-oneoff-patches)
+  - [List of Vagrant-Boxes](#list-of-vagrant-boxes)
+    - [Ansible-Controller](#ansible-controller)
+    - [Oracle Single Instance Filesystem](#oracle-single-instance-filesystem)
+      - [Playbook for dbfs161](#playbook-for-dbfs161)
+    - [Oracle Restart](#oracle-restart)
+      - [Playbook for has19c-162](#playbook-for-has19c-162)
+      - [Playbook for has21c-163](#playbook-for-has21c-163)
+    - [Racattack](#racattack)
+      - [Playbook for Racattack](#playbook-for-racattack)
   - [Vagrant](#vagrant)
     - [Mandatory Environment Variables](#mandatory-environment-variables)
     - [Environment preparation](#environment-preparation)
@@ -23,11 +31,15 @@ _This document is currently work in progress!_
       - [Install VS COde on your local machine](#install-vs-code-on-your-local-machine)
       - [Start VS Code with the Workspace file](#start-vs-code-with-the-workspace-file)
 
-## ansible-oracle
+## ansible-oracle - preparation
 
-### Environment Preparation for ansible-oracle
+### Install Ansible + Tools
 
-The ansible-oracle project needs a special directory structure for the installation media and patches.
+Make sure that Python 3.6+ + python-pip is installed.
+
+Important: Ansible 4.x+ require Python 3.8
+
+    install_ansible.sh
 
 ### Oracle Installationmedias & Patches
 
@@ -39,27 +51,74 @@ The following examples are based on the directory `/sw/oracle/linux64`
 
 The zip archives for the installation media or Golden-Images areexpected in the upper most directory:
 
-Installation medias
--------------------
+#### Installation medias
 
     /sw/oracle/linux64/LINUX.X64_193000_db_home.zip
     /sw/oracle/linux64/LINUX.X64_193000_grid_home.zip
     /sw/oracle/linux64/db_home_19.11.zip
     /sw/oracle/linux64/linuxx64_12201_database.zip
 
-OPatch
-------
+#### OPatch
 
 The OPatch archive is searched in same directory as the medias:
 
     /sw/oracle/linux64/p6880880_190000_Linux-x86-64.zip
 
-RUs/PSUs OneOff-Patches
------------------------
+#### RUs/PSUs OneOff-Patches
 
 Ansible-oracle searches patches by default
 
-### List of Vagrant-Boxes
+---
+
+## List of Vagrant-Boxes
+
+### Ansible-Controller
+
+| Name | IP | Description |
+|---|---|---|
+| ansible | 192.168.56.99 | Ansible Controller for ansible-oracle |
+
+### Oracle Single Instance Filesystem
+
+| Name | IP | Description |
+|---|---|---|
+| dbfs161 | 192.168.56.161 | Oracle DB 19c |
+
+#### Playbook for dbfs161
+
+ansible-playbook -i inventory/dbfs/hosts.yml single-instance-fs.yml -e hostgorup=dbfs
+
+### Oracle Restart
+
+| Name | IP | Description |
+|---|---|---|
+| has19c-162 | 192.168.56.162 | Oracle Restart 19c + DB 19c |
+| has21c-163 | 192.168.56.163 | Oracle Restart 21c + DB 21c |
+
+#### Playbook for has19c-162
+
+    ansible-playbook -i inventory/has/hosts.yml -e hostgroup=has19c single-instance-asm.yml 
+
+#### Playbook for has21c-163
+
+    ansible-playbook -i inventory/has/hosts.yml -e hostgroup=has21c single-instance-asm.yml 
+
+### Racattack
+
+| Boxname | Cores | RAM |DNS | IP | VIP | Interconnect | Description |
+|---|---|---|---|---|---|---|---|
+| collabn1 | 2 | 7GB | collabn1-192-168-56-171.nip.io | 192.168.56.171 | 192.168.56.181 | 192.168.57.171 | OracleLinux 7.x + Grid-Infrastructure 19c + DB 19c |
+| collabn2 | 2 | 7GB | collabn1-192-168-56-171.nip.io | 192.168.56.172 | 192.168.56.182 | 192.168.57.172 | OracleLinux 7.x + Grid-Infrastructure 19c + DB 19c |
+
+| SCAN | IP |
+|---|---|
+scan-192-168-56-171.nip.io | 192.168.56.171
+
+#### Playbook for Racattack
+
+    ansible-playbook -i inventory/racattack/hosts.yml -e hostgroup=collabn racattackl-install.yml --skip-tags redolog
+
+---
 
 ## Vagrant
 
