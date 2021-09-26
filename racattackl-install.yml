@@ -6,6 +6,7 @@
 #
 - import_playbook: os_racattack.yml
 - import_playbook: os.yml
+- import_playbook: sql-zauberkastern
 - import_playbook: swgi.yml
 - import_playbook: swdb.yml
 - import_playbook: manage-db.yml
