@@ -26,7 +26,7 @@ num_CORE              = 2
 memory_APPLICATION    = 1500
 memory_LEAF_INSTANCES = 2300
 memory_DB_INSTANCES   = 7168
-       
+
 # size of shared disk in GB
 size_shared_disk      = 15
 # number of shared disks
@@ -51,7 +51,7 @@ if dbver_i > giver_i
   exit 1
 end
 
-# cluster_type 
+# cluster_type
 # define cluster type, standard or flex
 if ENV['setup'] == "standard"
   cluster_type = "standard"
@@ -59,7 +59,7 @@ else
   cluster_type = "flex"
 end
 
-# We need 1 DB HUB, so assume 1 even if configured as 0 
+# We need 1 DB HUB, so assume 1 even if configured as 0
 num_DB_INSTANCES = 1 if num_DB_INSTANCES == 0
 
 # note: if num_LEAF_INSTANCES is 1 or more, cluster will be defaulted to flex
