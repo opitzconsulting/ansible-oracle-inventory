@@ -1,0 +1,9 @@
+---
+use_default_rules: true
+
+skip_list:
+  # must be fixed at later time
+  - var-naming
+
+exclude_paths:
+  - .github
