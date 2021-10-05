@@ -5,8 +5,8 @@
 #
 - name: yum update and reboot
   hosts: "{{ hostgroup | default('all') }}"
-  become: yes
-  gather_facts: no
+  become: true
+  gather_facts: false
   tasks:
     - name: Wait 300 seconds for Connection
       wait_for_connection:
@@ -14,29 +14,36 @@
 
     - name: yum update yum packages 1st
       package:
+        # noqa package-latest
         name: "yum*"
         state: latest
       register: yumyumstate
 
     - debug: msg="{{ yumyumstate.results }}"
+      # noqa unnamed-task
 
     - name: Kernel Update with later Reboot
       package:
+        # noqa package-latest
         name: "kernel-uek"
         state: latest
       register: kernelstate
 
     - debug: msg="{{ kernelstate.results }}"
+      # noqa unnamed-task
 
     - name: yum update
       package:
+        # noqa package-latest
         name: "*"
         state: latest
       register: updatestate
 
     - debug: msg="{{ kernelstate.results }}"
+      # noqa unnamed-task
 
     - name: reboot due to Kernel Update
+      # noqa no-handler
       reboot:
         reboot_timeout: 180
       when: kernelstate.changed

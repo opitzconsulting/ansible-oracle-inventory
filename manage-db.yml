@@ -1,7 +1,7 @@
 ---
 - name: Database Server Database Creation
   hosts: "{{ hostgroup | default('all') }}"
-  become: yes
+  become: true
   any_errors_fatal: true
   roles:
     - oradb-manage-db

@@ -5,7 +5,7 @@ configure_motd: false
 configure_cluster: false
 role_separation: false
 configure_oracle_sudo: true
-disable_EE_options: true
+disable_EE_options: true  # noqa var-naming
 autostartup_service: true
 
 control_management_pack_access: NONE
