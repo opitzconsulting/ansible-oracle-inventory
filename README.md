@@ -25,11 +25,14 @@ _This document is currently work in progress!_
       - [Install Vagrant, VirtualBox](#install-vagrant-virtualbox)
     - [Important info for 1st start of a VM](#important-info-for-1st-start-of-a-vm)
     - [Known issues with VBoxAddions](#known-issues-with-vboxaddions)
-  - [VS Code Integration](#vs-code-integration)
-    - [VS Code: Using added Workspace](#vs-code-using-added-workspace)
-      - [Setup local ~/.ssh/config in `git bash`](#setup-local-sshconfig-in-git-bash)
-      - [Install VS COde on your local machine](#install-vs-code-on-your-local-machine)
-      - [Start VS Code with the Workspace file](#start-vs-code-with-the-workspace-file)
+  - [Development](#development)
+    - [VS Code Integration](#vs-code-integration)
+      - [VS Code: Using added Workspace](#vs-code-using-added-workspace)
+        - [Setup local ~/.ssh/config in `git bash`](#setup-local-sshconfig-in-git-bash)
+        - [Install VS COde on your local machine](#install-vs-code-on-your-local-machine)
+        - [Start VS Code with the Workspace file](#start-vs-code-with-the-workspace-file)
+    - [ansible-lint and yaml-lint](#ansible-lint-and-yaml-lint)
+    - [git pre-commit setup](#git-pre-commit-setup)
 
 ## ansible-oracle - preparation
 
@@ -97,11 +100,11 @@ ansible-playbook -i inventory/dbfs/hosts.yml single-instance-fs.yml -e hostgorup
 
 #### Playbook for has19c-162
 
-    ansible-playbook -i inventory/has/hosts.yml -e hostgroup=has19c single-instance-asm.yml 
+    ansible-playbook -i inventory/has/hosts.yml -e hostgroup=has19c single-instance-asm.yml
 
 #### Playbook for has21c-163
 
-    ansible-playbook -i inventory/has/hosts.yml -e hostgroup=has21c single-instance-asm.yml 
+    ansible-playbook -i inventory/has/hosts.yml -e hostgroup=has21c single-instance-asm.yml
 
 ### Racattack
 
@@ -150,7 +153,7 @@ Open a powershell.exe with administrative priviledges:
 
 If it returns Restricted, then run
 
-    Set-ExecutionPolicy AllSigned 
+    Set-ExecutionPolicy AllSigned
 
 or
 
@@ -186,13 +189,15 @@ If this fails, the reinstallation from VDROM is needed. Add the cd as device ins
     mount /dev/cdrom /mnt/
     /mnt/VBoxLinuxAdditions.run
 
-## VS Code Integration
+## Development
 
-### VS Code: Using added Workspace
+### VS Code Integration
+
+#### VS Code: Using added Workspace
 
 The `ansible-oracle-inventory` includes an example Workspace configuration for easy usage of VS Code with ansible-oracle.
 
-#### Setup local ~/.ssh/config in `git bash`
+##### Setup local ~/.ssh/config in `git bash`
 
 The name `aoansible` is used in the Workspace configuration - do not change it!
 
@@ -202,11 +207,11 @@ The name `aoansible` is used in the Workspace configuration - do not change it!
       StrictHostKeyChecking no
       User vagrant
 
-#### Install VS COde on your local machine
+##### Install VS COde on your local machine
 
 Nothing really special here.
 
-#### Start VS Code with the Workspace file
+##### Start VS Code with the Workspace file
 
 The start depends on the SSH setup of you environment.
 Do not forget to start an ssh-agent, when dedicated keys are used. Otherwise code could not connect to the VM.
@@ -214,3 +219,17 @@ Do not forget to start an ssh-agent, when dedicated keys are used. Otherwise cod
 `code vscode/aoansible.code-workspace`
 
 All configured plugins are automatically installed on the target.
+
+### ansible-lint and yaml-lint
+
+Both linters are installed with the execution of ```install_ansible.sh```
+
+### git pre-commit setup
+
+This part is a little bit tricky, because ansible-lint needs an envronment variable from Ansible to work with ansible-oracle-inventory.
+
+Please add the following entry to ```.bashrc```
+
+```
+export ANSIBLE_DUPLICATE_YAML_DICT_KEY=ignore
+```
