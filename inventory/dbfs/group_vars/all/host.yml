@@ -7,7 +7,8 @@ role_separation: false
 configure_oracle_sudo: true
 
 # yamllint disable-line rule:var-naming
-disable_EE_options: true
+disable_EE_options: true  # noqa var-naming
+
 control_management_pack_access: NONE
 
 autostartup_service: true

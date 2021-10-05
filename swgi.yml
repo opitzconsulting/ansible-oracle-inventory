@@ -1,7 +1,7 @@
 ---
 - name: Oracle Grid Infrastructure / Restart installation & ASM Configuration
   hosts: "{{ hostgroup | default('all') }}"
-  become: yes
+  become: true
   any_errors_fatal: true
   roles:
     - oraswgi-install
