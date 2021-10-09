@@ -26,6 +26,7 @@ host_fs_layout:
     state: present
     filesystem:
       - {mntp: /u01, lvname: orabaselv, lvsize: 40G, fstype: xfs}
+      - {mntp: swap, lvname: swaplv, lvsize: 16g, fstype: swap}
     disk:
       - {device: /dev/sdb, pvname: /dev/sdb1}
   - vgname: rootvg

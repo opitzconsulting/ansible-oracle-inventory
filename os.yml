@@ -8,7 +8,8 @@
     - common
     - orahost
     - orahost-storage
-    - orahost-ssh
+    - name: orahost-ssh
+      when: configure_cluster | default(false)
     - cxoracle
     - orahost-logrotate
 
