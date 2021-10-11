@@ -25,7 +25,7 @@ num_CORE              = 2
 
 memory_APPLICATION    = 1500
 memory_LEAF_INSTANCES = 2300
-memory_DB_INSTANCES   = 7168
+memory_DB_INSTANCES   = 8750
 
 # size of shared disk in GB
 size_shared_disk      = 15
