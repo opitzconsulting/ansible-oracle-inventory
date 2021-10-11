@@ -88,7 +88,7 @@ Ansible-oracle searches patches by default
 
 #### Playbook for dbfs161
 
-ansible-playbook -i inventory/dbfs/hosts.yml single-instance-fs.yml -e hostgorup=dbfs
+ansible-playbook -i inventory/dbfs/hosts.yml os_vagrant.yml single-instance-fs.yml -e hostgorup=dbfs
 
 ### Oracle Restart
 
@@ -99,11 +99,11 @@ ansible-playbook -i inventory/dbfs/hosts.yml single-instance-fs.yml -e hostgorup
 
 #### Playbook for has19c-162
 
-    ansible-playbook -i inventory/has/hosts.yml -e hostgroup=has19c single-instance-asm.yml
+    ansible-playbook -i inventory/has/hosts.yml -e hostgroup=has19c os_vagrant.yml single-instance-asm.yml
 
 #### Playbook for has21c-163
 
-    ansible-playbook -i inventory/has/hosts.yml -e hostgroup=has21c single-instance-asm.yml
+    ansible-playbook -i inventory/has/hosts.yml -e hostgroup=has21c os_vagrant.yml single-instance-asm.yml
 
 ### Racattack
 
