@@ -1,10 +1,10 @@
 {
   "folders": [
     {
-      "uri": "vscode-remote://ssh-remote+aoansible/home/vagrant/git"
+      "uri": "vscode-remote://ssh-remote+vagrant@aoansible-192-168-56-99.nip.io/home/vagrant/git"
     }
   ],
-  "remoteAuthority": "ssh-remote+aoansible",
+  "remoteAuthority": "ssh-remote+vagrant@aoansible-192-168-56-99.nip.io",
   "settings": {
     "editor.insertSpaces": true,
     "editor.tabSize": 2,

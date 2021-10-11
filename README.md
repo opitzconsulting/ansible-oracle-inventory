@@ -28,7 +28,6 @@ _This document is currently work in progress!_
   - [Development](#development)
     - [VS Code Integration](#vs-code-integration)
       - [VS Code: Using added Workspace](#vs-code-using-added-workspace)
-        - [Setup local ~/.ssh/config in `git bash`](#setup-local-sshconfig-in-git-bash)
         - [Install VS COde on your local machine](#install-vs-code-on-your-local-machine)
         - [Start VS Code with the Workspace file](#start-vs-code-with-the-workspace-file)
     - [ansible-lint and yaml-lint](#ansible-lint-and-yaml-lint)
@@ -197,15 +196,9 @@ If this fails, the reinstallation from VDROM is needed. Add the cd as device ins
 
 The `ansible-oracle-inventory` includes an example Workspace configuration for easy usage of VS Code with ansible-oracle.
 
-##### Setup local ~/.ssh/config in `git bash`
+The following connection is used by VSCode:
 
-The name `aoansible` is used in the Workspace configuration - do not change it!
-
-    Host aoansible
-      HostName 192.168.56.99
-      ForwardAgent yes
-      StrictHostKeyChecking no
-      User vagrant
+    vagrant@aoansible-192.168.56.99.nip.io
 
 ##### Install VS COde on your local machine
 
@@ -213,7 +206,7 @@ Nothing really special here.
 
 ##### Start VS Code with the Workspace file
 
-The start depends on the SSH setup of you environment.
+The start depends on the SSH setup of youR environment.
 Do not forget to start an ssh-agent, when dedicated keys are used. Otherwise code could not connect to the VM.
 
 `code vscode/aoansible.code-workspace`
