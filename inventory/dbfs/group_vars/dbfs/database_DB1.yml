@@ -7,6 +7,9 @@ oracle_database_db1:
   oracle_db_name: &oracle_db_name DB1
   oracle_db_type: SI                                   # Type of database (RAC,RACONENODE,SI)
   is_container: true
+  # is_container: false
+  # Example custom DBCA-Template, usable for CDB and nonCDB
+  # dbca_templatename: 19c_custom_dbca.dbt
   storage_type: FS                                     # Database storage to be used. ASM or FS.
   oracle_db_mem_totalmb: 1024                          # Amount of RAM to be used for SGA
   oracle_database_type: MULTIPURPOSE                   # MULTIPURPOSE|DATA_WAREHOUSING|OLTP
