@@ -5,6 +5,9 @@ _This document is currently work in progress!_
 - [Example Inventories for ansible-oracle](#example-inventories-for-ansible-oracle)
   - [ansible-oracle - preparation](#ansible-oracle---preparation)
     - [Install Ansible + Tools](#install-ansible--tools)
+    - [How to download patches with getMOSPatch](#how-to-download-patches-with-getmospatch)
+      - [Preparation](#preparation)
+      - [Examples](#examples)
     - [Oracle Installationmedias & Patches](#oracle-installationmedias--patches)
       - [Installation medias](#installation-medias)
       - [OPatch](#opatch)
@@ -42,6 +45,32 @@ Make sure that Python 3.6+ + python-pip is installed.
 Important: Ansible 4.x+ require Python 3.8
 
     install_ansible.sh
+
+### How to download patches with getMOSPatch
+
+#### Preparation
+
+There is a really nice offline downloader:
+
+Due to license restriction, the tool could not be part of this repository. Download it with wget:
+
+    wget https://github.com/MarisElsins/getMOSPatch/raw/master/getMOSPatch.jar
+
+Java from openJDK 11 could be used.
+
+#### Examples
+
+Please read the documentation for more details:
+
+<https://github.com/MarisElsins/getMOSPatch/>
+
+Download latest version of AHF for Linux-x86_64
+
+    java -jar getMOSPatch.jar MOSUser=<MOS-Login> platform=226P download=all patch=30166242
+
+Download latest version of OPatch for Linux-x86_64. You get asked for the file to download. download=all will download all versions.
+
+    java -jar getMOSPatch.jar MOSUser=<MOS-Login> platform=226P patch=6880880
 
 ### Oracle Installationmedias & Patches
 
