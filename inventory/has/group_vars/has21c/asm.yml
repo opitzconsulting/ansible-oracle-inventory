@@ -2,9 +2,11 @@
 oracle_install_version_gi: 21.3.0.0
 oracle_home_gi: /u01/app/oracle/21/grid
 
-apply_patches_gi: false
-# gi_patches:
-#   "{{ gi_patches_config['21.04.0.0.210720'] }}"
+# oracle_install_image_gi: restart_home_21.4.zip
+
+apply_patches_gi: true
+gi_patches:
+  "{{ gi_patches_config['21.4.0.0.211019'] }}"
 
 device_persistence: asmlib
 oracle_asm_init_dg: data

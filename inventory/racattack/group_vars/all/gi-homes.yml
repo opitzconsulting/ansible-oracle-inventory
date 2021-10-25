@@ -4,6 +4,52 @@
 # referenced from other structures in the Inventory.
 
 gi_patches_config:
+
+  21.4.0.0.211019:
+    21.3.0.0:  # Base Release
+      opatch_minversion: 12.2.0.1.27
+      opatchauto:
+        - patchid: 33250101
+          patchversion: 21.4.0.0.211019
+          state: present
+          path: 21.4.0.0.211019/gi/33250101/33250101/
+          subpatches:
+            - 33271793  # OCW Release Update 21.4.0.0.211019
+            - 33239276  # Database Release Update 21.4.0.0.211019
+            - 33271789  # ACFS Release Update 21.4.0.0.211019
+            - 33276861  # Tomcat Release Update 21.0.0.0.0
+
+  19.13.0.0.211019:
+    19.3.0.0:  # Base Release
+      opatch_minversion: 12.2.0.1.27
+      opatchauto:
+        - patchid: 33182768
+          patchversion: 19.13.0.0.211019
+          state: present
+          path: ./19.13.0.0.211019/gi/33182768/33182768
+          subpatches:
+            - 33208123  # OCW Release Update 19.13.0.0.211019
+            - 32585572  # DBWLM Release Update
+            - 33208107  # ACFS Release Update 19.13.0.0.211019
+            - 33239955  # Tomcat Release Update 19.0.0.0.0
+            - 33192793  # Database Release Update 19.13.0.0.211019
+      opath:
+        # Remove Oracle Database 19c Important Recommended One-off Patches (Doc ID 555.1)
+        - {patchid: 32522300, state: absent, stop_processes: true}
+        - {patchid: 31143146, state: absent, stop_processes: true}
+        - {patchid: 31602782, state: absent, excludeUPI: 24359090, stop_processes: true}
+        - {patchid: 32919937, state: absent, excludeUPI: 24372674, stop_processes: true}
+        - {patchid: 33144001, state: absent, excludeUPI: 24351857, stop_processes: true}
+        - patchid: 32876380
+          # Oracle JavaVM Component Release Update (OJVM RU) 19.12.0.0.210720
+          stop_processes: true
+          state: present
+          path: 19.12.0.0.210720/ojvm/p32876380_190000_Linux-x86-64.zip
+          # Oracle Database 19c Important Recommended One-off Patches (Doc ID 555.1)
+        - {patchid: 31602782, path: 19.12.0.0.210720/p31602782_1912000DBRU_Linux-x86-64.zip, state: present, stop_processes: true}
+        - {patchid: 32919937, path: 19.12.0.0.210720/p32919937_1912000DBRU_Linux-x86-64.zip, state: present, stop_processes: true}
+        - {patchid: 33144001, path: 19.12.0.0.210720/p33144001_1912000DBRU_Linux-x86-64.zip, state: present, stop_processes: true}
+
   19.12.0.0.210720:
     19.3.0.0:  # Base Release
       opatch_minversion: 12.2.0.1.25
