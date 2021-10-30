@@ -122,7 +122,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Every Vagrant virtual environment requires a box to build off of.
   config.ssh.insert_key = false
-  config.vm.box = "Rendanic/oraclelinux-8.x"
+  config.vm.box = "Rendanic/oraclelinux-7.x"
 
   ## Virtualbox modifications
   ## we first setup memory and cpu
