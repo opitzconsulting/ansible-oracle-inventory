@@ -7,35 +7,50 @@
 
 Vagrant.configure("2") do |config|
 
+  lanip = "192.168.56.161"
+  vm_name = "dbfs161"
+
+  puts " "
+  puts " Single Instance Database in Filesystem"
+  puts " "
+  puts " Hostname: #{vm_name}"
+  puts " IP:       #{lanip}"
+  puts " Logins:"
+  puts "           vagrant / vagrant"
+  puts "           root    / vagrant"
+  puts " "
+  puts " Please do the 1st start with following command to create the additional disks!"
+  puts " VAGRANT_EXPERIMENTAL=disks vagrant up"
+  puts " "
+
   # Please define the folder to the extracted archives from Oracle
   #
   config.vm.synced_folder ENV['VAGRANT_ANSIBLE_ORACLE_SW'], "/sw/oracle", disabled: false, mount_options: ["ro"]
 
-  config.vm.disk :disk, size: "150GB", name: "dbfs161_oracle"
+  config.vm.disk :disk, size: "150GB", name: "#{vm_name}_oracle"
 
   # config.disksize.size = '50GB'
   config.vm.box =  "Rendanic/oraclelinux-7.x"
 
   config.vm.box_check_update = false
 
-  config.vm.network "private_network", ip: "192.168.56.161"
+  config.vm.network :private_network, ip: lanip
 
   # config.vm.network "public_network"
   config.ssh.insert_key = true
   config.ssh.username = "vagrant"
   config.ssh.password = "vagrant"
 
-  config.vm.hostname = "dbfs161.local"
+  config.vm.hostname = "#{vm_name}.local"
 
   config.vm.provider "virtualbox" do |vb|
+    vb.name = vm_name
     vb.gui = false
     vb.memory = "4096"
     vb.cpus = 2
-    vb.name = "dbfs161"
     vb.customize ["modifyvm", :id, "--groups", "/ansible-oracle"]
 
   end
-
 
   config.vm.provision "shell", inline: <<-SHELL
 
@@ -47,32 +62,6 @@ Vagrant.configure("2") do |config|
 
     sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
     systemctl restart sshd.service
-
-    yum install -y oracle-epel-release-el7
-    yum install -y git mc tree tig glances bash-completion
-
-    # resize /tmp
-    lvresize -L 1800m /dev/mapper/rootvg-tmplv
-    resize2fs /dev/mapper/rootvg-tmplv
-
-    lvresize -L 2g /dev/rootvg/swaplv
-    swapoff -a
-    mkswap /dev/rootvg/swaplv
-    swapon -a
-
-    cd /usr/local; git clone --recursive  https://github.com/Rendanic/SQL-Zauberkasten.git
-
-    test -d /home/vagrant/git || mkdir /home/vagrant/git
-    cd /home/vagrant/git
-    test -d /home/vagrant/git/ansible-oracle || git clone -b oc --recursive https://github.com/opitzconsulting/ansible-oracle.git
-    # test -d /home/vagrant/git/ansible-oracle-inventory || git clone --recursive https://github.com/opitzconsulting/ansible-oracle.git
-
-    chown -R vagrant:vagrant /home/vagrant/git
-
-    # create ssh-keys for passwordless login in ansible-oracle on localhost
-    test -f /home/vagrant/.ssh/id_rsa || (cat /dev/zero | ssh-keygen -q -P '' -f /home/vagrant/.ssh/id_rsa)
-    cat /home/vagrant/.ssh/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys
-    chown -R vagrant:vagrant /home/vagrant/
 
     yum install -y gcc make perl kernel-uek-devel
     yum update -y
