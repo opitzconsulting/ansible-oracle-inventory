@@ -1,0 +1,33 @@
+version: '3'
+
+volumes:
+  jenkins_home:
+    driver: local
+
+services:
+  jenkins:
+    container_name: jenkins
+    restart: always
+    image: jenkins/jenkins:lts
+    ports:
+      - "5100:8080"
+      - "5101:5101" # ssh
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - ./jenkins/plugins.txt:/custom/plugins.txt
+
+  jenkins-ansible:
+    container_name: jenkins-ansible
+    restart: always
+    image: jenkins-ansible:latest
+    build:
+      context: .
+      dockerfile: jenkins-ansible/Dockerfile
+    environment:
+      JENKINS_URL: http://jenkins-192-168-56-99.nip.io:5100
+      JENKINS_AGENT_NAME: ansible
+      JENKINS_AGENT_WORKDIR: /home/jenkins/agent
+      JENKINS_WEB_SOCKET: 'true'
+      # Secret depends on Jenkins installation!
+      JENKINS_SECRET: '${JENKINS_SECRET}'

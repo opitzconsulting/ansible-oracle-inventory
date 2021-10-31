@@ -7,3 +7,4 @@ skip_list:
 
 exclude_paths:
   - .github
+  - jenkins/install
