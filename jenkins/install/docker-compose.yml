@@ -11,7 +11,7 @@ services:
     image: jenkins/jenkins:lts
     ports:
       - "5100:8080"
-      - "5101:5101" # ssh
+      - "10022:5101" # ssh
       - "50000:50000"
     volumes:
       - jenkins_home:/var/jenkins_home

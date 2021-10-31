@@ -3,7 +3,7 @@ USER root
 
 RUN apt-get update && \
     apt-get -y install vim ca-certificates openssh-client groff && \
-    apt-get -y install python3-pip
+    apt-get -y install python3-pip sshpass
 RUN pip install ansible===2.9.26
 
 RUN apt-get clean autoclean && \

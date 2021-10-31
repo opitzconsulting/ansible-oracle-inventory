@@ -6,6 +6,7 @@
     - [Install Plugins](#install-plugins)
     - [Jenkins Agent for Ansible](#jenkins-agent-for-ansible)
   - [Usage](#usage)
+    - [Start Job with SSH](#start-job-with-ssh)
 
 This folder includes an example setup for Jenkins to create an automatic test platform for ansible-oracle.
 
@@ -64,3 +65,11 @@ podman logs -f jenkins-ansible
 ## Usage
 
 Url: <http://jenkins-192-168-56-99^.nip.io:5100>
+
+### Start Job with SSH
+
+Work in progress
+
+```bash
+ssh -p 10022 jenkins-192-168-56-99.nip.io -l admin console ansible-oracle-playbook/jenkinsfile -f
+```
