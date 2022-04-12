@@ -1,7 +1,7 @@
 ---
 # Example configuration
 # oracle_tnsnames_config:
-#   ocrlpdb:
+#   orclpdb:
 #     connect:
 #       service_name: orclpdb
 #     address:
@@ -9,5 +9,5 @@
 
 # tnsnames_installed:
 #   - home: db19-si-ee
-#     tnsname: ocrlpdb
+#     tnsname: orclpdb
 #     state: present
