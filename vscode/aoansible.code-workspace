@@ -11,10 +11,10 @@
     "editor.detectIndentation": true,
     "yaml.format.enable": true,
     "recommendations": [
-      "ms-vscode-remote.remote-ssh",
-      "tomaciazek.ansible"
+      "ms-vscode-remote.remote-ssh"
     ],
     "remote.SSH.defaultExtensions": [
+      "asciidoctor.asciidoctor-vscode",
       "dbaeumer.vscode-eslint",
       "davidanson.vscode-markdownlint",
       "eamodio.gitlens",
@@ -22,10 +22,10 @@
       "redhat.ansible",
       "redhat.vscode-yaml",
       "timonwong.shellcheck",
-      "tomaciazek.ansible",
       "yzhang.markdown-all-in-one"
     ],
     "remote.extensionKind": {
+      "asciidoctor.asciidoctor-vscode": "workspace",
       "davidanson.vscode-markdownlint": "workspace",
       "dbaeumer.vscode-eslint": "workspace",
       "eamodio.gitlens": "workspace",
@@ -33,7 +33,6 @@
       "redhat.ansible": "workspace",
       "redhat.vscode-yaml": "workspace",
       "timonwong.shellcheck": "workspace",
-      "tomaciazek.ansible": "workspace",
       "yzhang.markdown-all-in-one": "workspace"
     }
   }
