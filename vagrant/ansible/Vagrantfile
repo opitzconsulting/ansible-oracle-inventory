@@ -4,6 +4,7 @@
 Vagrant.configure("2") do |config|
 
   config.vm.box =  "Rendanic/oraclelinux-8.x"
+  config.disksize.size = '50GB'
 
   puts " "
   puts " Ansible-Controller for ansible-oracle"

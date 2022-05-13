@@ -1,0 +1,6 @@
+git
+blueocean
+blueocean-web
+workflow-multibranch
+jobConfigHistory
+ansible
