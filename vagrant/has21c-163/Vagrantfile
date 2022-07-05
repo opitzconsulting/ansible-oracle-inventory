@@ -18,7 +18,7 @@ Vagrant.configure("2") do |config|
   config.vm.disk :disk, size: "150GB", name: "#{vm_name}_oracle"
   config.vm.disk :disk, size: "30GB", name: "#{vm_name}_asmdata1"
   config.vm.disk :disk, size: "30GB", name: "#{vm_name}_asmfra1"
-
+  
   # config.disksize.size = '50GB'
   config.vm.box =  "Rendanic/oraclelinux-8.x"
 
@@ -59,7 +59,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
 
     if [ ! -b /dev/sdb ]; then
-      echo "Please start the Box with following command once to create the additional disks!"
+      echo "Please start the Box with following command once to create the addional disks!"
       echo "VAGRANT_EXPERIMENTAL=disks vagrant up"
       exit 1
     fi
@@ -67,6 +67,16 @@ Vagrant.configure("2") do |config|
     sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
     systemctl restart sshd.service
 
+    # copy public key to vagrant user
+    ssh_public_key=/vagrant/id_rsa.pub
+    if test -f "$ssh_public_key" ; then
+      echo "Check if public key $ssh_public_key is valid."
+      if ssh-keygen -l -f "$ssh_public_key" ; then
+        echo "Add public key to /home/vagrant/.ssh/authorized_keys"
+        cat "$ssh_public_key" >> /home/vagrant/.ssh/authorized_keys
+      fi
+    fi
+    
     yum install -y gcc make perl kernel-uek-devel
     yum update -y
     /sbin/rcvboxadd quicksetup all

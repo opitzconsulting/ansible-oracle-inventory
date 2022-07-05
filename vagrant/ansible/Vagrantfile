@@ -1,71 +1,52 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-Vagrant.configure("2") do |config|
+# shell provisioner code
+$script = <<-SCRIPT
+  # openjdk is needed for ocmp-documentation project
+  # shellcheck for VSCode
+  apt install -y openjdk-8-jdk shellcheck
 
-  config.vm.box =  "Rendanic/oraclelinux-8.x"
+  # copy public key to vagrant user
+  ssh_public_key=/vagrant/id_rsa.pub
+  if test -f "$ssh_public_key" ; then
+    echo "Check if public key $ssh_public_key is valid."
+    if ssh-keygen -l -f "$ssh_public_key" ; then
+      echo "Add public key to /home/vagrant/.ssh/authorized_keys"
+      cat "$ssh_public_key" >> /home/vagrant/.ssh/authorized_keys
+    fi
+  fi
+
+  curl -q -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && \
+    chmod a+x /usr/local/bin/docker-compose
+
+  test -d /home/vagrant/git || (mkdir /home/vagrant/git ; chown vagrant /home/vagrant/git)
+  
+SCRIPT
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/jammy64"
+  config.disksize.size = '100GB'
+  config.vm.box_check_update = true
+  config.vm.network "private_network", ip: "192.168.56.99"
+  config.ssh.insert_key = true
+  config.vm.hostname = "ansible-192-168-56-99.nip.io"
 
   puts " "
   puts " Ansible-Controller for ansible-oracle"
   puts " "
-  puts " Hostname: ansible.local"
+  puts " Hostname: ansible-192-168-56-99.nip.io"
   puts " IP:       192.168.56.99"
-  puts " Logins:"
-  puts "           vagrant / vagrant"
-  puts "           root    / vagrant"
   puts " "
 
-  config.vm.box_check_update = false
-
-  config.vm.network "private_network", ip: "192.168.56.99"
-
-  # config.vm.network "public_network"
-  config.ssh.insert_key = true
-  config.ssh.username = "vagrant"
-  config.ssh.password = "vagrant"
-
-  config.vm.hostname = "ansible.local"
 
   config.vm.provider "virtualbox" do |vb|
-     vb.gui = false
-     vb.memory = "3072"
-     vb.cpus = 2
-     vb.name = "ansible"
-     vb.customize ["modifyvm", :id, "--groups", "/ansible-oracle"]
+    vb.gui = false
+    vb.memory = "2048"
+    vb.cpus = 2
+    vb.name = "ansible-99"
 
+    config.vm.provision "docker"
+    config.vm.provision "shell", inline: $script
   end
-
-
-  config.vm.provision "shell", inline: <<-SHELL
-
-  sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
-  systemctl restart sshd.service
-
-  yum install -y oracle-epel-release-el8
-  yum install -y git mc tree tig glances bash-completion python38-pip sshpass
-
-  lvresize -L 2g /dev/rootvg/swaplv
-  swapoff -a
-  mkswap /dev/rootvg/swaplv
-  swapon -a
-
-	cd /usr/local; git clone --recursive  https://github.com/Rendanic/SQL-Zauberkasten.git
-
-	test -d /home/vagrant/git || mkdir /home/vagrant/git
-	cd /home/vagrant/git
-	test -d /home/vagrant/git/ansible-oracle || git clone -b oc --recursive https://github.com/opitzconsulting/ansible-oracle.git
-	test -d /home/vagrant/git/ansible-oracle-inventory || git clone --recursive https://github.com/opitzconsulting/ansible-oracle-inventory.git
-
-  chown -R vagrant:vagrant /home/vagrant/git
-
-  # create ssh-keys for passwordless login in ansible-oracle on localhost
-  test -f /home/vagrant/.ssh/id_rsa || (cat /dev/zero | ssh-keygen -q -P '' -f /home/vagrant/.ssh/id_rsa)
-  cat /home/vagrant/.ssh/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys
-  chown -R vagrant:vagrant /home/vagrant/
-
-  yum install -y gcc make perl kernel-uek-devel elfutils-libelf-devel bzip2 tar
-  yum update -y
-  /sbin/rcvboxadd quicksetup all
-
-  SHELL
 end
