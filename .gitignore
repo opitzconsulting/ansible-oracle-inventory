@@ -2,3 +2,4 @@
 *.vdi
 *.log
 *.html
+id_rsa.pub
