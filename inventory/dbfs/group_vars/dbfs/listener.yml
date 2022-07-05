@@ -4,7 +4,7 @@ oracle_listeners_config:
   LISTENER:
     home: &listener_home db19-si-ee
     address:
-      - host: "{{ansible_hostname}}"
+      - host: "{{ ansible_hostname }}"
         protocol: TCP
         port: 1521
 
