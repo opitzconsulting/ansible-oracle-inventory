@@ -1,4 +1,5 @@
 ---
+- import_playbook: dev-sec.yml
 - import_playbook: os.yml
 - import_playbook: sql-zauberkastern.yml
 - import_playbook: swdb.yml
