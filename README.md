@@ -2,49 +2,59 @@
 
 _This document is currently work in progress!_
 
-- [Example Inventories for ansible-oracle](#example-inventories-for-ansible-oracle)
-  - [ansible-oracle - preparation](#ansible-oracle---preparation)
-    - [Install Ansible + Tools](#install-ansible--tools)
-    - [How to download patches with getMOSPatch](#how-to-download-patches-with-getmospatch)
-      - [Preparation](#preparation)
-      - [Examples](#examples)
-    - [Oracle Installationmedias & Patches](#oracle-installationmedias--patches)
-      - [Installation medias](#installation-medias)
-      - [OPatch](#opatch)
-      - [RUs/PSUs OneOff-Patches](#ruspsus-oneoff-patches)
-  - [List of Vagrant-Boxes](#list-of-vagrant-boxes)
-    - [Ansible-Controller](#ansible-controller)
-    - [Oracle Single Instance Filesystem](#oracle-single-instance-filesystem)
-      - [Playbook for dbfs161](#playbook-for-dbfs161)
-    - [Oracle Restart](#oracle-restart)
-      - [Playbook for has19c-162](#playbook-for-has19c-162)
-      - [Playbook for has21c-163](#playbook-for-has21c-163)
-    - [Racattack](#racattack)
-      - [Playbook for Racattack](#playbook-for-racattack)
-  - [Vagrant](#vagrant)
-    - [Mandatory Environment Variables](#mandatory-environment-variables)
-    - [Environment preparation](#environment-preparation)
-      - [Install chocolatey](#install-chocolatey)
-      - [Install Vagrant, VirtualBox](#install-vagrant-virtualbox)
-    - [Important info for 1st start of a VM](#important-info-for-1st-start-of-a-vm)
-    - [Known issues with VBoxAddions](#known-issues-with-vboxaddions)
-  - [Development](#development)
-    - [VS Code Integration](#vs-code-integration)
-      - [VS Code: Using added Workspace](#vs-code-using-added-workspace)
-        - [Install VS COde on your local machine](#install-vs-code-on-your-local-machine)
-        - [Start VS Code with the Workspace file](#start-vs-code-with-the-workspace-file)
-    - [ansible-lint and yaml-lint](#ansible-lint-and-yaml-lint)
-    - [git pre-commit setup](#git-pre-commit-setup)
+_Breaking Change in July 2022 for `ansible` and `dbfs161` vagrant box. The boxes were renamed and require a local destory+up._
+
+1. [Example Inventories for ansible-oracle](#example-inventories-for-ansible-oracle)
+   1. [ansible-oracle - preparation](#ansible-oracle---preparation)
+      1. [Development for ansible-oracle](#development-for-ansible-oracle)
+      2. [Start Ansible-Container](#start-ansible-container)
+      3. [How to download patches with getMOSPatch](#how-to-download-patches-with-getmospatch)
+         1. [Preparation](#preparation)
+         2. [Examples](#examples)
+      4. [Oracle Installationmedias & Patches](#oracle-installationmedias--patches)
+         1. [Installation medias](#installation-medias)
+         2. [OPatch](#opatch)
+         3. [RUs/PSUs OneOff-Patches](#ruspsus-oneoff-patches)
+   2. [List of Vagrant-Boxes](#list-of-vagrant-boxes)
+      1. [Ansible-Controller](#ansible-controller)
+      2. [Oracle Single Instance Filesystem](#oracle-single-instance-filesystem)
+         1. [Playbook for dbfs161](#playbook-for-dbfs161)
+      3. [Oracle Restart](#oracle-restart)
+         1. [Playbook for has19c-162](#playbook-for-has19c-162)
+         2. [Playbook for has21c-163](#playbook-for-has21c-163)
+      4. [Racattack](#racattack)
+         1. [Playbook for Racattack](#playbook-for-racattack)
+   3. [Vagrant](#vagrant)
+      1. [Mandatory Environment Variables](#mandatory-environment-variables)
+      2. [Environment preparation](#environment-preparation)
+         1. [Install chocolatey](#install-chocolatey)
+         2. [Install Vagrant, VirtualBox](#install-vagrant-virtualbox)
+      3. [Important info for 1st start of a VM](#important-info-for-1st-start-of-a-vm)
+      4. [Known issues with VBoxAddions](#known-issues-with-vboxaddions)
+   4. [Development](#development)
+      1. [VS Code Integration](#vs-code-integration)
+         1. [VS Code: Using added Workspace](#vs-code-using-added-workspace)
+            1. [Install VS COde on your local machine](#install-vs-code-on-your-local-machine)
+            2. [Start VS Code with the Workspace file](#start-vs-code-with-the-workspace-file)
+      2. [ansible-lint and yaml-lint](#ansible-lint-and-yaml-lint)
+      3. [git pre-commit setup](#git-pre-commit-setup)
 
 ## ansible-oracle - preparation
 
-### Install Ansible + Tools
+### Development for ansible-oracle
 
-Make sure that Python 3.6+ + python-pip is installed.
+Please execute `install_ansible.sh` once, when developing for `ansible-oracle`is planned.
+That will stall anbsible-lint and git pre-commit, which is mandatory for a Pull-Request.
 
-Important: Ansible 4.x+ require Python 3.8
+### Start Ansible-Container
 
-    install_ansible.sh
+Ansible is started inside a Container. There is no local installation of Ansible in the OS anymore. This allows an easy change between different versions of Ansible.
+
+The Container is started with the following command:
+
+```
+./ansible.sh
+```
 
 ### How to download patches with getMOSPatch
 
