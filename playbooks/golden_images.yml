@@ -4,6 +4,8 @@
   hosts: "{{ hostgroup | default('all') }}"
   become: true
   any_errors_fatal: true
+  collections:
+    - opitzconsulting.ansible_oracle
   roles:
-    - oraswdb-golden-image
-    - oraswgi-golden-image
+    - oraswdb_golden_image
+    - oraswgi_golden_image

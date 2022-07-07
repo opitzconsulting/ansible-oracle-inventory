@@ -1,7 +1,14 @@
 version: '3.3'
 services:
   ansible:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ansible_version: 5.8.0
+    #     ansible_version: 2.9.26
+    # container_name: ansible-oracle-2.9.26
+    # image: ansible:2.9.26
     container_name: ansible-oracle-2.12.6
     image: ansible:2.12.6
     hostname: ansible-oracle
