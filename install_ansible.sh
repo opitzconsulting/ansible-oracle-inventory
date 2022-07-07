@@ -9,7 +9,7 @@ sudo apt install -y python3-pip pre-commit
 # pip3 install --user "rich>=10.0.0,<11.0.0"
 
 pip3 install --user "yamllint==1.26.3"
-pip3 install --user "ansible-lint==6.2.2"
+pip3 install --user "ansible-lint==6.3.0"
 
 # git pre-commit setup
 pip3 install --user pre-commit
