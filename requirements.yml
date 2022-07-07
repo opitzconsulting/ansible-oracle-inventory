@@ -2,3 +2,6 @@
 collections:
   - name: devsec.hardening
     version: 7.14.1
+  - name: https://github.com/opitzconsulting/ansible-oracle.git
+    type: git
+    version: collection

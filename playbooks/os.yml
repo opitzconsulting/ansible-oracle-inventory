@@ -4,14 +4,16 @@
   hosts: "{{ hostgroup | default('all') }}"
   become: true
   any_errors_fatal: true
+  collections:
+    - opitzconsulting.ansible_oracle
   roles:
     - common
     - orahost
-    - orahost-storage
-    - name: orahost-ssh
+    - orahost_storage
+    - name: orahost_ssh
       when: configure_cluster | default(false)
     - cxoracle
-    - orahost-logrotate
+    - orahost_logrotate
 
   post_tasks:
     - name: Restart autofs

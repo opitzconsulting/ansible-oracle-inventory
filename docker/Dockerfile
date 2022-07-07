@@ -27,7 +27,7 @@ RUN apt-get update -y &&\
 
 RUN python3 -m pip install --upgrade pip
 
-RUN pip3 install ansible===${ansible_version:-5.8.0} && \
+RUN pip3 install ansible===${ansible_version} && \
     apt-get clean autoclean && \
     apt-get autoremove --yes && \
     rm -rf /var/lib/{apt,dpkg,cache,log}/ && \

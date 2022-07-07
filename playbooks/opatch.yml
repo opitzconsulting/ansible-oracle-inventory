@@ -4,6 +4,8 @@
   hosts: "{{ hostgroup | default('all') }}"
   become: true
   any_errors_fatal: true
+  collections:
+    - opitzconsulting.ansible_oracle
   roles:
-    - oraswdb-manage-patches
-    - oradb-datapatch
+    - oraswdb_manage_patches
+    - oradb_datapatch
