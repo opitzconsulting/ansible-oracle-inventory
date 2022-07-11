@@ -8,7 +8,7 @@ oracle_database_db1:
   oracle_db_type: SI                                   # Type of database (RAC,RACONENODE,SI)
   is_container: true
   storage_type: ASM                                     # Database storage to be used. ASM or FS.
-  oracle_db_mem_totalmb: 1024                          # Amount of RAM to be used for SGA
+  oracle_db_mem_totalmb: 1536                          # Amount of RAM to be used for SGA
   oracle_database_type: MULTIPURPOSE                   # MULTIPURPOSE|DATA_WAREHOUSING|OLTP
   redolog_size: 75M
   redolog_groups: 3
@@ -51,6 +51,7 @@ oracle_database_db1:
     - {name: log_buffer, value: '64M', scope: spfile, state: present}
     - {name: pga_aggregate_target, value: '200M', scope: both, state: present, dbca: false}
     - {name: sga_target, value: '1800M', scope: spfile, state: present, dbca: false}
+    - {name: shared_pool_size, value: '768M', scope: both, state: present, dbca: true}
     - {name: recyclebin, value: 'off', scope: spfile, state: present}
     - {name: standby_file_management, value: 'AUTO', scope: both, state: present}
     - {name: streams_pool_size, value: '152M', scope: spfile, state: present}
