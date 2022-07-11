@@ -5,6 +5,18 @@
 
 gi_patches_config:
 
+  21.6.0.0.220419:
+    21.3.0.0:  # Base Release
+      opatch_minversion: 12.2.0.1.29
+      opatchauto:
+        - patchid: 33859395
+          patchversion: 21.4.0.0.211019
+          state: present
+          path: 21.6.0.0.220419/gi/33859395/33859395/
+          subpatches:
+            - 33853705  # OCW Release Update 21.6.0.0.220419
+            - 33843745  # Database Release Update 21.6.0.0.220419
+
   21.4.0.0.211019:
     21.3.0.0:  # Base Release
       opatch_minversion: 12.2.0.1.27
@@ -16,6 +28,34 @@ gi_patches_config:
           subpatches:
             - 33271793  # OCW Release Update 21.4.0.0.211019
             - 33239276  # Database Release Update 21.4.0.0.211019
+
+  19.15.0.0.220419:
+    19.3.0.0:  # Base Release
+      opatch_minversion: 12.2.0.1.29
+      opatchauto:
+        - patchid: 33803476
+          patchversion: 19.15.0.0.220419
+          state: present
+          path: ./19.15.0.0.220419/gi/33803476/33803476
+          subpatches:
+            - 33815596  # OCW Release Update 19.15.0.0.220419
+            - 33575402  # DBWLM Release Update
+            - 33806152  # Database Release Update 19.15.0.0.220419
+      opatch:
+          # Remove Oracle Database 19c Important Recommended One-off Patches (Doc ID 555.1)
+        - {patchid: 29213893, state: absent, excludeUPI: 1, stop_processes: true}
+        - {patchid: 30978304, state: absent, excludeUPI: 1, stop_processes: true}
+        - {patchid: 31602782, state: absent, excludeUPI: 1, stop_processes: true}
+        - {patchid: 33121934, state: absent, excludeUPI: 1, stop_processes: true}
+        - {patchid: 32522300, state: absent, stop_processes: true}
+        - {patchid: 31143146, state: absent, stop_processes: true}
+        - {patchid: 32919937, state: absent, stop_processes: true}
+        - {patchid: 33144001, state: absent, stop_processes: true}
+        - patchid: 33808367
+          # Oracle JavaVM Component Release Update (OJVM RU) 19.15.0.0.220419
+          stop_processes: true
+          state: present
+          path: 19.15.0.0.220419/ojvm/p33808367_190000_Linux-x86-64.zip
 
   19.13.0.0.211019:
     19.3.0.0:  # Base Release
