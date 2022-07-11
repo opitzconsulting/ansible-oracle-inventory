@@ -6,7 +6,7 @@ oracle_home_gi: /u01/app/oracle/21/grid
 
 apply_patches_gi: true
 gi_patches:
-  "{{ gi_patches_config['21.4.0.0.211019'] }}"
+  "{{ gi_patches_config['21.6.0.0.220419'] }}"
 
 device_persistence: asmlib
 oracle_asm_init_dg: data

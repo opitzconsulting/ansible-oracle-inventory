@@ -2,12 +2,27 @@
 apply_patches_db: true
 db_homes_config:
 
+  db2106-gi-ee: &db2106-gi-ee
+    home: db2106-gi-ee
+    version: 21.3.0.0
+    oracle_home: /u01/app/oracle/product/21/db2106-gi-ee
+    edition: EE
+    opatch_minversion: 12.2.0.1.29
+    opatchauto:
+      - patchid: 33250101
+        patchversion: 21.6.0.0.220419
+        state: present
+        path: 21.6.0.0.220419/gi/33859395/33859395/
+        subpatches:
+          - 33853705  # OCW Release Update 21.6.0.0.220419
+          - 33843745  # Database Release Update 21.6.0.0.220419
+
   db2104-gi-ee: &db2104-gi-ee
     home: db2104-gi-ee
     version: 21.3.0.0
     oracle_home: /u01/app/oracle/product/21/db2104-gi-ee
     edition: EE
-    opatch_minversion: 12.2.0.1.27
+    opatch_minversion: 12.2.0.1.28
     opatchauto:
       - patchid: 33250101
         patchversion: 21.4.0.0.211019
@@ -23,6 +38,38 @@ db_homes_config:
     oracle_home: /u01/app/oracle/product/21/db2103-gi-ee
     edition: EE
     opatch_minversion: 12.2.0.1.24
+
+  db1915-gi-ee: &db1915-gi-ee
+    home: db1915-si-ee
+    version: 19.3.0.0
+    oracle_home: /u01/app/oracle/product/19/db1915-si-ee
+    edition: EE
+    opatch_minversion: 12.2.0.1.27
+    opatchauto:
+      - patchid: 33803476
+        patchversion: 19.15.0.0.220419
+        state: present
+        path: ./19.15.0.0.220419/gi/33803476/33803476
+        subpatches:
+          - 33815596  # OCW Release Update 19.15.0.0.220419
+          - 33575402  # DBWLM Release Update
+          - 33806152  # Database Release Update 19.15.0.0.220419
+    opatch:
+        # Remove Oracle Database 19c Important Recommended One-off Patches (Doc ID 555.1)
+      - {patchid: 29213893, state: absent, excludeUPI: 1, stop_processes: true}
+      - {patchid: 30978304, state: absent, excludeUPI: 1, stop_processes: true}
+      - {patchid: 31602782, state: absent, excludeUPI: 1, stop_processes: true}
+      - {patchid: 33121934, state: absent, excludeUPI: 1, stop_processes: true}
+      - {patchid: 32522300, state: absent, stop_processes: true}
+      - {patchid: 31143146, state: absent, stop_processes: true}
+      - {patchid: 32919937, state: absent, stop_processes: true}
+      - {patchid: 33144001, state: absent, stop_processes: true}
+      - patchid: 33808367
+        # Oracle JavaVM Component Release Update (OJVM RU) 19.15.0.0.220419
+        stop_processes: true
+        state: present
+        path: 19.15.0.0.220419/ojvm/p33808367_190000_Linux-x86-64.zip
+        # Oracle Database 19c Important Recommended One-off Patches (Doc ID 555.1)
 
   db1913-gi-ee: &db1913-gi-ee
     home: db1913-si-ee
@@ -85,15 +132,6 @@ db_homes_config:
       - {patchid: 32919937, state: absent, excludeUPI: 24372674, stop_processes: true}
       - {patchid: 33144001, state: absent, excludeUPI: 24351857, stop_processes: true}
         # New Patches
-      # - patchid: 32876380
-      #   # Oracle JavaVM Component Release Update (OJVM RU) 19.12.0.0.210720
-      #   stop_processes: true
-      #   state: present
-      #   path: 19.12.0.0.210720/ojvm/p32876380_190000_Linux-x86-64.zip
-      #   # Oracle Database 19c Important Recommended One-off Patches (Doc ID 555.1)
-      # - {patchid: 31602782, path: 19.12.0.0.210720/p31602782_1912000DBRU_Linux-x86-64.zip, state: present, stop_processes: true}
-      # - {patchid: 32919937, path: 19.12.0.0.210720/p32919937_1912000DBRU_Linux-x86-64.zip, state: present, stop_processes: true}
-      # - {patchid: 33144001, path: 19.12.0.0.210720/p33144001_1912000DBRU_Linux-x86-64.zip, state: present, stop_processes: true}
 
   db1911-gi-ee: &db1911-gi-ee
     home: db1911-gi-ee
@@ -136,12 +174,12 @@ db_homes_config:
   # use this mapping for fast change between the Release Updates
   # <<: * => merge values from alias and overwrite oracle_home + home
   db21-gi-ee:
-    <<: *db2104-gi-ee
+    <<: *db2106-gi-ee
     oracle_home: /u01/app/oracle/product/21/db1
     home: db21-gi-ee
   db19-gi-ee:
-    <<: *db1913-gi-ee
-    imagename: db_home_19.12.zip
+    <<: *db1915-gi-ee
+    # imagename: db_home_19.15.zip
     oracle_home: /u01/app/oracle/product/19/db1
     home: db19-gi-ee
   db18-gi-ee:
