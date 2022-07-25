@@ -29,6 +29,34 @@ gi_patches_config:
             - 33271793  # OCW Release Update 21.4.0.0.211019
             - 33239276  # Database Release Update 21.4.0.0.211019
 
+  19.16.0.0.220719:
+    19.3.0.0:  # Base Release
+      opatch_minversion: 12.2.0.1.29
+      opatchauto:
+        - patchid: 34130714
+          patchversion: 19.16.0.0.220719
+          state: present
+          path: 19.16.0.0.220719/gi/34130714/34130714
+          subpatches:
+            - 34160635  # OCW Release Update 19.16.0.0.220719
+            - 33575402  # DBWLM Release Update
+            - 34133642  # Database Release Update 19.16.0.0.220719
+      opatch:
+          # Remove Oracle Database 19c Important Recommended One-off Patches (Doc ID 555.1)
+        - {patchid: 29213893, state: absent, excludeUPI: 1, stop_processes: true}
+        - {patchid: 30978304, state: absent, excludeUPI: 1, stop_processes: true}
+        - {patchid: 31602782, state: absent, excludeUPI: 1, stop_processes: true}
+        - {patchid: 33121934, state: absent, excludeUPI: 1, stop_processes: true}
+        - {patchid: 32522300, state: absent, stop_processes: true}
+        - {patchid: 31143146, state: absent, stop_processes: true}
+        - {patchid: 32919937, state: absent, stop_processes: true}
+        - {patchid: 33144001, state: absent, stop_processes: true}
+        - patchid: 34086870
+          # Oracle JavaVM Component Release Update (OJVM RU) 19.16.0.0.220719
+          stop_processes: true
+          state: present
+          path: 19.16.0.0.220719/ojvm/p34086870_190000_Linux-x86-64.zip
+
   19.15.0.0.220419:
     19.3.0.0:  # Base Release
       opatch_minversion: 12.2.0.1.29
