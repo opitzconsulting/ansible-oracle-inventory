@@ -2,6 +2,21 @@
 apply_patches_db: true
 db_homes_config:
 
+  db2107-gi-ee: &db2107-gi-ee
+    home: db2107-gi-ee
+    version: 21.3.0.0
+    oracle_home: /u01/app/oracle/product/21/db2107-gi-ee
+    edition: EE
+    opatch_minversion: 12.2.0.1.30
+    opatchauto:
+      - patchid: 34155589
+        patchversion: 21.7.0.0.220719
+        state: present
+        path: 21.7.0.0.220719/gi/34155589/34155589
+        subpatches:
+          - 34172231  # OCW Release Update 21.7.0.0.220719
+          - 34160444  # Database Release Update 21.7.0.0.220719
+
   db2106-gi-ee: &db2106-gi-ee
     home: db2106-gi-ee
     version: 21.3.0.0
@@ -206,7 +221,7 @@ db_homes_config:
   # use this mapping for fast change between the Release Updates
   # <<: * => merge values from alias and overwrite oracle_home + home
   db21-gi-ee:
-    <<: *db2106-gi-ee
+    <<: *db2107-gi-ee
     oracle_home: /u01/app/oracle/product/21/db1
     home: db21-gi-ee
   db19-gi-ee:

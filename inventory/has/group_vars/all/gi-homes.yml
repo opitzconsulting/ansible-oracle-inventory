@@ -5,6 +5,18 @@
 
 gi_patches_config:
 
+  21.7.0.0.220719:
+    21.3.0.0:  # Base Release
+      opatch_minversion: 12.2.0.1.30
+      opatchauto:
+        - patchid: 34155589
+          patchversion: 21.4.0.0.211019
+          state: present
+          path: 21.7.0.0.220719/gi/34155589/34155589
+          subpatches:
+            - 34172231  # OCW Release Update 21.7.0.0.220719
+            - 34160444  # Database Release Update 21.7.0.0.220719
+
   21.6.0.0.220419:
     21.3.0.0:  # Base Release
       opatch_minversion: 12.2.0.1.29
