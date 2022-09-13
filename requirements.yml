@@ -3,3 +3,7 @@ collections:
   - name: devsec.hardening
     version: 8.2.0
   - name: opitzconsulting.ansible_oracle
+    version: 3.0.0
+  # - name: https://github.com/oravirt/ansible-oracle.git
+  #   type: git
+  #   version: master
