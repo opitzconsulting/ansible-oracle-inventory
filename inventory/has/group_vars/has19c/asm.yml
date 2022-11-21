@@ -6,9 +6,11 @@ oracle_home_gi: /u01/app/oracle/19/grid
 
 apply_patches_gi: true
 gi_patches:
-  "{{ gi_patches_config['19.15.0.0.220419'] }}"
+  "{{ gi_patches_config['19.16.0.0.220719'] }}"
 
 device_persistence: asmlib
+oracle_asm_disk_string: ORCL:*
+
 oracle_asm_init_dg: data
 
 asm_diskgroups:        # ASM Diskgroups used for DB-storage. Should map to dict asm_storage_layout.
