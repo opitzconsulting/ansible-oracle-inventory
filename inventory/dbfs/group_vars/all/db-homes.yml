@@ -3,7 +3,6 @@ apply_patches_db: true
 db_homes_config:
 
   db1915-si-ee: &db1915-si-ee
-    home: db1915-si-ee
     version: 19.3.0.0
     oracle_home: /u01/app/oracle/product/19/db1915-si-ee
     edition: EE
@@ -38,7 +37,6 @@ db_homes_config:
         # Oracle Database 19c Important Recommended One-off Patches (Doc ID 555.1)
 
   db1913-si-ee: &db1913-si-ee
-    home: db1913-si-ee
     version: 19.3.0.0
     oracle_home: /u01/app/oracle/product/19/db1913-si-ee
     edition: EE
@@ -80,7 +78,6 @@ db_homes_config:
       - {patchid: 33121934, path: 19.13.0.0.211019/p33121934_1913000DBRU_Linux-x86-64.zip, state: present, stop_processes: true}
 
   db1912-si-ee: &db1912-si-ee
-    home: db1912-si-ee
     version: 19.3.0.0
     oracle_home: /u01/app/oracle/product/19/db1912-si-ee
     edition: EE
@@ -115,7 +112,6 @@ db_homes_config:
       - {patchid: 33144001, path: 19.12.0.0.210720/p33144001_1912000DBRU_Linux-x86-64.zip, state: present, stop_processes: true}
 
   db1911-si-ee: &db1911-si-ee
-    home: db1911-si-ee
     version: 19.3.0.0
     oracle_home: /u01/app/oracle/product/19/db1911-si-ee
     edition: EE
@@ -144,7 +140,6 @@ db_homes_config:
       - {patchid: 32919937, path: 19.11.0.0.210420/p32919937_1911000DBRU_Linux-x86-64.zip, state: present, stop_processes: true}
 
   db1814-si-ee: &db1814-si-ee
-    home: db1814-si-ee
     version: 18.3.0.0
     oracle_home: /u01/app/oracle/product/18/db1814-si-ee
     edition: EE
@@ -167,7 +162,6 @@ db_homes_config:
       - {patchid: 30352715, state: present, stop_processes: true, path: 18.14/p30352715_1814000DBRU_Linux-x86-64.zip}
 
   db1813-si-ee: &db1813-si-ee
-    home: db1813-si-ee
     version: 18.3.0.0
     oracle_home: /u01/app/oracle/product/18/db1813-si-ee
     edition: EE
@@ -188,7 +182,6 @@ db_homes_config:
       - {patchid: 30352715, state: present, stop_processes: true, path: 18.13/p30352715_1813000DBRU_Linux-x86-64.zip}
 
   db12201-si-ee:
-    home: db12201-si-ee
     version: 12.2.0.1
     oracle_home: /u01/app/oracle/product/12.2.0.1/db12201-si-ee
     edition: EE
@@ -196,7 +189,7 @@ db_homes_config:
     opatch_minversion: 12.2.0.1.13
 
   db12102-si-ee:
-    home: db12102-si-ee
+   # home: db12102-si-ee
     version: 12.1.0.2
     oracle_home: /u01/app/oracle/product/12.1.0.2/db12102-si-ee
     edition: EE
@@ -204,7 +197,6 @@ db_homes_config:
     opatch_minversion: 12.2.0.1.13
 
   db11204-si-ee:
-    home: db11204-si-ee
     version: 11.2.0.4
     oracle_home: /u01/app/oracle/product/11.2.0.4/db11204-si-ee
     edition: EE
@@ -217,11 +209,11 @@ db_homes_config:
     <<: *db1915-si-ee
     # imagename: db_home_19.13.zip
     oracle_home: /u01/app/oracle/product/19/db1
-    home: db19-si-ee
+    oracle_home_name: db19_si_ee
+    readonly_home: true
   db18-si-ee:
     <<: *db1814-si-ee
     # oracle_home: /u01/app/oracle/product/18/db1
-    # home: db18-si-ee
 
 db_homes_installed:
   - home: db19-si-ee
