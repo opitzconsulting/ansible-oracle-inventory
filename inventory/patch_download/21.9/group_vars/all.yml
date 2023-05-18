@@ -1,0 +1,13 @@
+---
+oracle_patch_download_dir: /vagrant
+
+# mos_login:
+# mos_password:
+
+oracle_sw_patches:
+
+  - filename: p34838415_210000_Linux-x86-64.zip
+    patchid: 34838415
+    version: 21.3.0.0
+    patchversion: 21.9.0.0.230117
+    description: GI RELEASE UPDATE 21.9.0.0.0
