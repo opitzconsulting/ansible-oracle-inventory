@@ -1,6 +1,29 @@
 ---
 apply_patches_db: true
 db_homes_config:
+  db1919-si-ee: &db1919-si-ee
+    version: 19.3.0.0
+    oracle_home: /u01/app/oracle/product/19/db1919-si-ee
+    edition: EE
+    opatch_minversion: 12.2.0.1.36
+    opatch:
+      # Remove Oracle Database 19c Important Recommended One-off Patches (Doc ID 555.1)
+      - patchid: 35042068
+        # Database Release Update 19.19.0.0.230418
+        stop_processes: true
+        state: present
+        path: 19.19.0.0.230418/gi/35037840/35037840/35042068
+      - patchid: 35050331
+        # OCW Release Update 19.19.0.0.230418
+        stop_processes: true
+        state: present
+        path: 19.19.0.0.230418/gi/35037840/35037840/35050331
+      - patchid: 35050341
+        # Oracle JavaVM Component Release Update (OJVM RU) 19.19.0.0.230418
+        stop_processes: true
+        state: present
+        path: 19.19.0.0.230418/ojvm/p35050341_190000_Linux-x86-64.zip
+
   db1917-si-ee: &db1917-si-ee
     version: 19.3.0.0
     oracle_home: /u01/app/oracle/product/19/db1917-si-ee
@@ -232,7 +255,7 @@ db_homes_config:
   # use this mapping for fast change between the Release Updates
   # <<: * => merge values from alias and overwrite oracle_home + home
   db19-si-ee:
-    <<: *db1917-si-ee
+    <<: *db1919-si-ee
     # imagename: db_home_19.13.zip
     oracle_home: /u01/app/oracle/product/19/db1
     oracle_home_name: db19_si_ee
