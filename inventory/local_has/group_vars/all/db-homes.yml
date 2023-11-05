@@ -1,4 +1,6 @@
 ---
+oraswdb_golen_image_create: true
+
 apply_patches_db: true
 db_homes_config:
 

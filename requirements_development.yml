@@ -1,0 +1,4 @@
+---
+collections:
+  - source: ./../ansible-oracle
+    type: dir

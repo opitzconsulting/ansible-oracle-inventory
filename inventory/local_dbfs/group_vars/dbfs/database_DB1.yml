@@ -3,21 +3,24 @@
 # Don't forget to add the oracle_database_<name> to oracle_databases!
 #
 oracle_database_db1:
-  home: &db_config_home db21-gi-ee
+  home: &db_config_home db19-si-ee
   oracle_db_name: &oracle_db_name DB1
   oracle_db_type: SI                                   # Type of database (RAC,RACONENODE,SI)
   is_container: true
-  storage_type: ASM                                     # Database storage to be used. ASM or FS.
-  oracle_db_mem_totalmb: 1536                          # Amount of RAM to be used for SGA
+  # is_container: false
+  # Example custom DBCA-Template, usable for CDB and nonCDB
+  # dbca_templatename: 19c_custom_dbca.dbt
+  storage_type: FS                                     # Database storage to be used. ASM or FS.
+  oracle_db_mem_totalmb: 1024                          # Amount of RAM to be used for SGA
   oracle_database_type: MULTIPURPOSE                   # MULTIPURPOSE|DATA_WAREHOUSING|OLTP
   redolog_size: 75M
   redolog_groups: 3
-  datafile_dest: +DATA
-  recoveryfile_dest: +FRA
-  # listener_name: LISTENER                            # This home will have a listener configured
+  datafile_dest: /u02/oradata
+  recoveryfile_dest: /u02/fra
+  listener_name: LISTENER                            # This home will have a listener configured
   listener_port: &cdb_listener_port 1521
   # *local_listener is used in initparam as an achor
-  local_listener: &local_listener "'{{ ansible_hostname }}:1521'"
+  local_listener: &local_listener "{{ ansible_hostname }}:1521"
   archivelog: false
   flashback: false
   force_logging: true
@@ -35,12 +38,13 @@ oracle_database_db1:
   init_parameters:
     - {name: audit_trail, value: 'NONE', scope: spfile, state: present}
     - {name: processes, value: '400', scope: spfile, state: present, dbca: false}
-    # - {name: local_listener, value: *local_listener, scope: both, state: present}
+    - {name: local_listener, value: *local_listener, scope: both, state: present}
     - {name: archive_lag_target, value: '900', scope: both, state: present}
     - {name: control_management_pack_access, value: '{{ control_management_pack_access }}', scope: both, state: present}
     - {name: control_file_record_keep_time, value: '30', scope: both, state: present}
     - {name: db_files, value: '200', scope: spfile, state: present}
     - {name: deferred_segment_creation, value: 'false', scope: both, state: present}
+    - {name: db_domain, value: 'local', scope: spfile, state: present}
     - {name: filesystemio_options, value: 'setall', scope: spfile, state: present}
     - {name: job_queue_processes, value: '10', scope: both, state: present}
   # Disable forcing hugepages on really small systems
@@ -51,7 +55,6 @@ oracle_database_db1:
     - {name: log_buffer, value: '64M', scope: spfile, state: present}
     - {name: pga_aggregate_target, value: '160M', scope: both, state: present, dbca: false}
     - {name: sga_target, value: '1808M', scope: spfile, state: present, dbca: false}
-    - {name: shared_pool_size, value: '768M', scope: both, state: present, dbca: true}
     - {name: recyclebin, value: 'off', scope: spfile, state: present}
     - {name: standby_file_management, value: 'AUTO', scope: both, state: present}
     - {name: streams_pool_size, value: '160M', scope: spfile, state: present}
@@ -59,8 +62,8 @@ oracle_database_db1:
     - {name: "_cursor_obsolete_threshold", value: '1024', scope: spfile, state: present}
     - {name: max_pdbs, value: '3', scope: both, state: present}
     - {name: clonedb, value: 'true', scope: spfile, state: present, dbca: false}
-    - {name: db_create_file_dest, value: '+DATA', scope: both, state: present}
-    - {name: db_create_online_log_dest_1, value: '+DATA', scope: both, state: present}
+    - {name: db_create_file_dest, value: '/u02/oradata', scope: both, state: present}
+    - {name: db_create_online_log_dest_1, value: '/u02/oradata', scope: both, state: present}
     # file_dest_size in bytes in 12.1.0.2 due to bug in DBCA
     - {name: db_recovery_file_dest_size, value: '10G', scope: both, state: present, dbca: false}
 
@@ -88,6 +91,13 @@ oracle_database_db1:
         - select_catalog_role
         - create session
       state: present
+  roles:
+    - name: c##testrole
+      state: present
+
+  # services:
+  #   - name: cdbsrv
+  #     state: present
 
   rman_jobs:
     - {name: parameter}
@@ -104,12 +114,20 @@ oracle_pdb_db1_orclpdb:
     purgedays: 14
     snaplevel: 7
     state: present
-
+  users:
+    - schema: check_mk
+      grants:
+        - select_catalog_role
+        - create session
+      state: present
+  roles:
+    - name: testrole
+      state: present
   tablespaces:
     - {name: system, size: 10M, autoextend: true, next: 50M, maxsize: 4G, content: permanent, state: present, bigfile: false}
     - {name: sysaux, size: 10M, autoextend: true, next: 50M, maxsize: 4G, content: permanent, state: present, bigfile: false}
     - {name: undotbs1, size: 10M, autoextend: true, next: 50M, maxsize: 8G, content: permanent, state: present, bigfile: false}
     - {name: users, size: 10M, autoextend: true, next: 50M, maxsize: 2G, content: permanent, state: present, bigfile: false}
     - {name: temp, size: 10M, autoextend: true, next: 50M, maxsize: 4G, content: permanent, state: present, bigfile: false}
-  # init_parameters:
-  #      - {name: db_create_file_dest, value: '/u02/oradata/', scope: both, state: present}
+  init_parameters:
+    - {name: open_cursors, value: '2000', scope: spfile, state: present}

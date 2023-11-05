@@ -1,0 +1,13 @@
+---
+# Example configuration
+# oracle_tnsnames_config:
+#   orclpdb:
+#     connect:
+#       service_name: orclpdb
+#     address:
+#       - host: localhost
+
+# tnsnames_installed:
+#   - home: db19-si-ee
+#     tnsname: orclpdb
+#     state: present
