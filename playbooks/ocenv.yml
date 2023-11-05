@@ -1,0 +1,12 @@
+---
+- name: Install environment helper ocenv
+  hosts: "{{ hostgroup | default('all') }}"
+  any_errors_fatal: true
+  become: true
+  become_user: oracle
+  tasks:
+    - name: Install ocenv
+      ansible.builtin.include_role:
+        name: opitzconsulting.ansible_oracle.oradb_manage_db
+        tasks_from: ocenv.yml
+      become:

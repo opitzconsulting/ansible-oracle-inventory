@@ -1,0 +1,9 @@
+---
+- name: Database Server Database Facts
+  hosts: "{{ hostgroup | default('all') }}"
+  any_errors_fatal: true
+  tasks:
+    - name: Gather database facts
+      ansible.builtin.import_role:
+        name: opitzconsulting.ansible_oracle.oradb_facts
+    - debug: var=oracledb_facts
