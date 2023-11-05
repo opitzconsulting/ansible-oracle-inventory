@@ -1,0 +1,21 @@
+---
+is_sw_source_local: false
+oracle_sw_copy: false
+oracle_sw_unpack: true
+
+oracle_stage_remote: /sw/oracle/linux64
+
+oracle_stage: /u01/stage
+golden_image_dest: /u01/golden
+
+# mos_login:
+# mos_password:
+
+oracle_patch_download_dir: /sw/oracle/linux64
+
+oracle_sw_patches:
+  - filename: p35319490_190000_Linux-x86-64.zip
+    patchid: 35319490
+    version: 19.3.0.0
+    patchversion: 19.20.0.0.230718
+    description: GI Release Update 19.20.0.0.230718 (REL-JUL230718)

@@ -1,0 +1,4 @@
+---
+# for OL7
+interpreter_python: /usr/bin/python2
+# discovered_interpreter_python: /usr/bin/python2

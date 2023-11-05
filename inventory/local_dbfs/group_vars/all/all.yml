@@ -1,0 +1,18 @@
+---
+oracle_patch_download_dir: /vagrant
+
+# mos_login:
+# mos_password:
+
+oracle_sw_patches:
+  - filename: p34762026_190000_Linux-x86-64.zip
+    patchid: 35042068
+    version: 19.3.0.0
+    patchversion: 19.18.0.0.230117
+    description: GI Release Update 19.18.0.0.230117 (REL-JAN230131)
+
+  - filename: p34786990_190000_Linux-x86-64.zip
+    patchid: 35050341
+    version: 19.3.0.0
+    patchversion: 19.18.0.0.230117
+    description: OJVM RELEASE UPDATE 19.18.0.0.0

@@ -20,10 +20,10 @@ oracle_tnsnames_config:
     address:
       - host: oradg2
 
-sqlnet_installed:
-  - home: db19-si-ee
-    sqlnet: sqlnetalias1
-    state: present
+# sqlnet_installed:
+#      - home: db19-si-ee
+#        sqlnet: sqlnetalias1
+#        state: present
 
 sqlnet_config:
   sqlnetalias1:
