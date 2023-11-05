@@ -1,0 +1,9 @@
+- name: Show Grid-Infrastructure/Restart facts
+  hosts: all
+  vars:
+    oracle_env:
+      ORACLE_HOME: /u01/app/oracle/21/grid
+  tasks:
+    - name: Return GI facts
+      opitzconsulting.ansible_oracle.oracle_gi_facts:
+      environment: "{{ oracle_env }}"
