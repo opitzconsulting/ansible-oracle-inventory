@@ -4,10 +4,14 @@ ansible-navigator:
   #   artifact-dir: navigator
   #   rotate-artifacts-count: 20
   execution-environment:
-    enabled: false
+    enabled: true
     environment-variables:
       set:
         ANSIBLE_CONFIG: ansible.cfg
+    volume-mounts:
+      - src: "/vagrant"
+        dest: "/vagrant"
+        options: "Z"
   logging:
     level: warning
   mode: stdout
