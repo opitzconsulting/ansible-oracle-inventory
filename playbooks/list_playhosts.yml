@@ -1,0 +1,14 @@
+---
+#
+# List Play Hosts.
+# This is a helper playbook for AWX.
+#
+#
+- name: List play hosts
+  hosts: "{{ hostgroup | default('all') }}"
+  gather_facts: false
+  any_errors_fatal: true
+  tasks:
+    - name: List Play hosts
+      ansible.builtin.debug:
+        var: play_hosts

@@ -1,15 +1,15 @@
 ---
 collections:
   - name: community.general
-    version: '>=3.8.0,<7.0.0'
+    version: 7.0.0
   - name: devsec.hardening
     version: 8.6.0
   - name: opitzconsulting.ansible_oracle
-    version: 3.7.0
+    version: 4.3.0
 
   # Development only settings!
   # - source: ./../ansible-oracle
   #   type: dir
   # - name: https://github.com/Rendanic/ansible-oracle.git
   #   type: git
-  #   version: master
+  #   version: pr/lsof
