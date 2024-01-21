@@ -1,0 +1,19 @@
+---
+oracle_wallet_config:
+  - name: wallet1
+    home: db19-si-ee
+    path: /u01/app/oracle/wallet
+    state: present
+    # mode: g+rx
+    dbcredentials:
+      - tns_name: orclpdb_checkmk
+        db_name: db1
+        db_user: C##CMK_MONITORING
+        state: present
+      - tns_name: orclpdb_dbsnmp
+        db_name: db1
+        db_user: DBSNMP
+        state: present
+
+oracle_wallet_password:
+  wallet1: Oracle_987
