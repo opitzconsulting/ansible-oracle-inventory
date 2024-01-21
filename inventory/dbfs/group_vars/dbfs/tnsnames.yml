@@ -2,8 +2,11 @@
 # Example configuration
 oracle_tnsnames_config:
   orclpdb:
+    alias:
+      - orclpdb_dbsnmp
+      - orclpdb_checkmk
     connect:
-      service_name: orclpdb.local
+      service_name: orclpdb
     address:
       - host: localhost
 
